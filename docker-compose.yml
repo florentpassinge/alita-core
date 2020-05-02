@@ -1,0 +1,139 @@
+version: '3.6'
+
+services:
+  php:
+    build:
+      context: ./
+      dockerfile: ./docker/php/Dockerfile
+      args:
+        USER_ID: ${USER_ID:?err}
+        GROUP_ID: ${GROUP_ID:?err}
+        PHP_VERSION_MAJOR: ${PHP_VERSION_MAJOR:?err}
+        PHP_VERSION_MINOR: ${PHP_VERSION_MINOR:?0}
+    restart: on-failure
+    networks:
+      - internal
+    expose:
+      - '9000'
+    env_file:
+      - .env.dev.local
+    depends_on:
+      - pg
+    links:
+      - mailcatcher
+    volumes:
+      - ${HOME}/.composer:/.composer
+      - /etc/localtime:/etc/localtime:ro
+      - ./:/srv/alita:rw,cached
+    labels:
+      - "traefik.backend=php"
+      - "traefik.enable=false"
+    ulimits:
+      nproc: 65535
+      nofile:
+        soft: 20000
+        hard: 40000
+    logging:
+      driver: "json-file"
+      options:
+        max-size: '100k'
+        max-file: '20'
+  pg:
+    image: postgres:11-alpine
+    restart: on-failure
+    networks:
+      - internal
+    ports:
+      #- 64998:5432
+      - 5432:5432
+    env_file:
+      - .env.dev.local
+    volumes:
+      - ./data/postgres:/var/lib/postgresql/data
+      - ./data/dbDumps:/dumps
+    labels:
+      - "traefik.backend=pg"
+      - "traefik.enable=false"
+    environment:
+      - POSTGRES_USER=${POSTGRES_USER}
+      - POSTGRES_PASSWORD=${POSTGRES_PASSWORD}
+    logging:
+      driver: "json-file"
+      options:
+        max-size: '100k'
+        max-file: '20'
+  web:
+    build:
+      context: ./docker/nginx
+      dockerfile: Dockerfile
+      args:
+        NGINX_VERSION_MAJOR: ${NGINX_VERSION_MAJOR:?err}
+    restart: on-failure
+    networks:
+      - web
+      - internal
+    env_file:
+      - .env.dev.local
+    depends_on:
+      - php
+    volumes:
+      - ./web:/srv/alita/web:ro
+      - ./public:/srv/alita/public:ro
+    labels:
+      - "traefik.backend=web"
+      - "traefik.enable=true"
+      - "traefik.port=80"
+      - "traefik.frontend.rule=HostRegexp:alita.localhost"
+      - "traefik.docker.network=web"
+    logging:
+      driver: "json-file"
+      options:
+        max-size: '100k'
+        max-file: '20'
+  reverse-proxy:
+    image: traefik:1.7.6-alpine
+    restart: on-failure
+    networks:
+      - web
+    env_file:
+      - .env.dev.local
+    ports:
+      - '80:80'
+      - '8080:8080'
+    volumes:
+      - /var/run/docker.sock:/var/run/docker.sock
+      - ./docker/traefik/conf/traefik.toml:/traefik.toml
+    labels:
+      - "traefik.backend=traefik"
+      - "traefik.frontend.rule=Host:monitor.localhost"
+      - "traefik.port=8080"
+      - "traefik.enable=true"
+  adminer:
+    image: adminer
+    restart: on-failure
+    networks:
+      - web
+      - internal
+    depends_on:
+      - pg
+    labels:
+      - "traefik.backend=adminer"
+      - "traefik.docker.network=web"
+      - "traefik.enabled=true"
+      - "traefik.port=8080"
+      - "traefik.frontend.rule=Host:adminer.localhost"
+  mailcatcher:
+    image: yappabe/mailhog
+    ports:
+      - 1025:1025
+      - 8025:8025
+    restart: on-failure
+    networks:
+      - web
+      - internal
+
+networks:
+  web:
+    external: true
+  internal:
+    external: false

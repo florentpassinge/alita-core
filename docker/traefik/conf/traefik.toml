@@ -1,0 +1,22 @@
+debug = false
+logLevel = "INFO"
+
+defaultEntryPoints = ["http"]
+
+[entryPoints]
+  [entryPoints.http]
+    address = ":80"
+  [entryPoints.dashboard]
+    address = ":8080"
+    [entryPoints.dashboard.auth]
+      [entryPoints.dashboard.auth.basic]
+        users = ["admin:$apr1$0onTAyjk$j.3pnTC6N3UKunn85xUgg."]
+
+
+[api]
+entrypoint="dashboard"
+
+[docker]
+domain = "alita.localhost"
+watch = true
+network = "web"
