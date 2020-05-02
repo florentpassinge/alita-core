@@ -18,6 +18,9 @@
 # data
 /data/
 
+# Phpstrom
+.idea
+
 # Backup entities generated with doctrine:generate:entities command
 **/Entity/*~
 
@@ -39,3 +42,8 @@
 .phpunit.result.cache
 /phpunit.xml
 ###< symfony/phpunit-bridge ###
+
+###> friendsofphp/php-cs-fixer ###
+/.php_cs
+/.php_cs.cache
+###< friendsofphp/php-cs-fixer ###
