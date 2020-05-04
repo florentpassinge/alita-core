@@ -16,10 +16,11 @@ class Site
 {
     /**
      * @ORM\Id()
-     * @ORM\Column(type="string", length=50)
+     * @ORM\GeneratedValue()
+     * @ORM\Column(type="integer")
      * @ORM\GeneratedValue(strategy="SEQUENCE")
      */
-    private string $id;
+    private ?int $id = null;
 
     /**
      * @ORM\Column(type="string")

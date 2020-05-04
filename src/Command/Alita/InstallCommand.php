@@ -5,9 +5,11 @@ declare(strict_types = 1);
 namespace App\Command\Alita;
 
 use App\Command\BaseCommand;
+use App\Entity\Site;
 use Symfony\Component\Console\Helper\ProgressBar;
 use Symfony\Component\Console\Input\ArrayInput;
 use Symfony\Component\Console\Input\InputInterface;
+use Symfony\Component\Console\Output\NullOutput;
 use Symfony\Component\Console\Output\OutputInterface;
 use Symfony\Component\Console\Question\ConfirmationQuestion;
 use Symfony\Component\Console\Question\Question;
@@ -80,11 +82,11 @@ EOF);
         $question = new ConfirmationQuestion('Are you agreed with this ? (y/n) [n] : ', false);
 
         if ($helper->ask($this->input, $this->output, $question)) {
-            $questionSiteName = new Question('Name of website (alita) : ', 'alita');
-            $questionSiteUrl  = new Question('URL of website (alita.localhost) : ', 'alita.localhost');
+            $questionSiteTitle = new Question('Title of website (alita) : ', 'alita');
+            $questionSiteUrl   = new Question('URL of website (alita.localhost) : ', 'alita.localhost');
 
-            $siteName = $helper->ask($this->input, $this->output, $questionSiteName);
-            $siteUrl  = $helper->ask($this->input, $this->output, $questionSiteUrl);
+            $siteTitle = $helper->ask($this->input, $this->output, $questionSiteTitle);
+            $siteUrl   = $helper->ask($this->input, $this->output, $questionSiteUrl);
 
             $progressBar = new ProgressBar($this->output, 2);
             $progressBar->setFormat('verbose');
@@ -92,7 +94,7 @@ EOF);
             $progressBar->start();
             $this->installDatabase();
             $progressBar->advance();
-            //$this->installSite();
+            $this->installSite($siteTitle, $siteUrl);
             $progressBar->finish();
         } else {
             $this->output->writeln('<comment>Uninstalling</comment>');
@@ -110,6 +112,19 @@ EOF);
         ];
 
         $args = new ArrayInput($arguments);
-        $command->run($args, $this->output);
+        $command->run($args, new NullOutput());
+    }
+
+    public function installSite(string $title, string $url): void
+    {
+        $site = new Site();
+        $site->setTitle($title)
+            ->setUrl($url)
+            ->setCreatedBy('register_alita')
+            ->setUpdatedBy('register_alita')
+        ;
+
+        $this->em->persist($site);
+        $this->em->flush();
     }
 }
