@@ -29,7 +29,8 @@ Command for install Alita step by step
 EOF)
             ->setHelp(<<<EOF
 Configure Alita step by Step.
-1. Configure first website
+1. Install database
+2. Configure first website
 EOF);
     }
 
