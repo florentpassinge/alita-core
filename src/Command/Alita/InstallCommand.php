@@ -6,6 +6,7 @@ namespace App\Command\Alita;
 
 use App\Command\BaseCommand;
 use App\Entity\Site;
+use App\Entity\User;
 use Symfony\Component\Console\Helper\ProgressBar;
 use Symfony\Component\Console\Input\ArrayInput;
 use Symfony\Component\Console\Input\InputInterface;
@@ -18,33 +19,52 @@ class InstallCommand extends BaseCommand
 {
     protected static $defaultName = 'alita:init';
 
-    private array $tables;
+    private array $tablesAction = [
+        'database' => ['action' => 'installDatabase',   'description' => 'Install database'],
+        'sites'    => ['action' => 'installSite',       'description' => 'Install Site', 'class' => Site::class],
+        'users'    => ['action' => 'installUser',       'description' => 'Install User', 'class' => User::class],
+    ];
 
     private bool $install = false;
 
+    private Site $site;
+
     public function configure(): void
     {
+        $help = <<<EOF
+Configure Alita step by Step.
+EOF;
+        $i = 1;
+        foreach ($this->tablesAction as $table => $data) {
+            $help .= <<<EOF
+
+{$i}. {$data['description']}
+EOF;
+            ++$i;
+        }
+
         $this->setDescription(<<<EOF
 Command for install Alita step by step
 EOF)
-            ->setHelp(<<<EOF
-Configure Alita step by Step.
-1. Install database
-2. Configure first website
-EOF);
+            ->setHelp($help);
     }
 
     public function execute(InputInterface $input, OutputInterface $output): int
     {
         $this->input  = $input;
         $this->output = $output;
+        $this->helper = $this->getHelper('question');
 
         $this->output->writeln('<info>OKay! Install Alita</info>');
 
         $this->preCheck();
 
         if ($this->install) {
-            $this->install();
+            $this->upgrade(true);
+        } elseif (1 <= count($this->tablesAction)) {
+            $this->upgrade(false);
+        } else {
+            $this->output->writeln('<info>Install Ok!</info>');
         }
 
         return 0;
@@ -56,49 +76,71 @@ EOF);
         $progressBar->setFormat('verbose');
         $this->output->writeln('<info>Precheck for Alita : </info>');
         $progressBar->start();
-        $this->tables = $this->em->getConnection()->getSchemaManager()->listTableNames();
-
-        if (0 === count($this->tables)) {
+        $tables = [];
+        try {
+            $tables = $this->em->getConnection()->getSchemaManager()->listTableNames();
+        } catch (\Exception $e) {
             $this->install = true;
             $progressBar->finish();
             $this->output->writeln('  <comment>No tables found, we need to install Alita</comment>');
 
             return;
         }
+
+        if (0 === count($tables)) {
+            $this->install = true;
+            $progressBar->finish();
+            $this->output->writeln('  <comment>No tables found, we need to install Alita</comment>');
+
+            return;
+        }
+
+        unset($this->tablesAction['database']);
+
+        foreach ($tables as $k => $v) {
+            if (null !== $this->tablesAction[$v]) {
+                if (null !== $this->em->getRepository($this->tablesAction[$v]['class'])->findOneBy([])) {
+                    unset($this->tablesAction[$v]);
+                }
+            }
+        }
+        $progressBar->finish();
     }
 
-    private function install(): void
+    private function upgrade(bool $install): void
     {
-        $this->output->writeln('<info>Install Alita</info>');
-        $this->output->writeln([
-            '============================================',
-            '== Alita - Summary of actions for install ==',
-            '============================================',
-            '== 1. Install Database                    ==',
-            '== 2. Configure Website                   ==',
-            '============================================',
-        ]);
+        $this->output->writeln('<info>'.($install ? 'Install' : 'Update').' Alita</info>');
 
-        $helper   = $this->getHelper('question');
+        $description = [
+            '============================================',
+            '== Alita - Summary of actions for '.($install ? 'install' : 'update').' ==',
+            '============================================',
+        ];
+
+        $i = 1;
+        foreach ($this->tablesAction as $table => $data) {
+            $description[] = '== '.$i.'. '.$data['description'].str_repeat(' ', 35 - strlen($data['description'])).' ==';
+            ++$i;
+        }
+
+        $description[] = '============================================';
+
+        $this->output->writeln($description);
+
         $question = new ConfirmationQuestion('Are you agreed with this ? (y/n) [n] : ', false);
 
-        if ($helper->ask($this->input, $this->output, $question)) {
-            $questionSiteTitle = new Question('Title of website (alita) : ', 'alita');
-            $questionSiteUrl   = new Question('URL of website (alita.localhost) : ', 'alita.localhost');
-
-            $siteTitle = $helper->ask($this->input, $this->output, $questionSiteTitle);
-            $siteUrl   = $helper->ask($this->input, $this->output, $questionSiteUrl);
-
-            $progressBar = new ProgressBar($this->output, 2);
-            $progressBar->setFormat('verbose');
+        if ($this->helper->ask($this->input, $this->output, $question)) {
+            $progressBar = new ProgressBar($this->output, count($this->tablesAction));
             $this->output->writeln('<info>Okay, let\'s go!</info>');
             $progressBar->start();
-            $this->installDatabase();
-            $progressBar->advance();
-            $this->installSite($siteTitle, $siteUrl);
+
+            foreach ($this->tablesAction as $table => $data) {
+                $this->{$data['action']}();
+                $progressBar->advance();
+            }
             $progressBar->finish();
         } else {
-            $this->output->writeln('<comment>Uninstalling</comment>');
+            $this->output->writeln('<comment>Abort '.($install ? 'install' : 'update').' </comment>');
 
             return;
         }
@@ -106,6 +148,15 @@ EOF);
 
     public function installDatabase(): void
     {
+        $command = $this->getApplication()->find('doctrine:database:create');
+
+        $arguments = [
+            'command' => 'doctrine:database:create',
+        ];
+
+        $args = new ArrayInput($arguments);
+        $command->run($args, new NullOutput());
+
         $command = $this->getApplication()->find('doctrine:schema:create');
 
         $arguments = [
@@ -116,8 +167,15 @@ EOF);
         $command->run($args, new NullOutput());
     }
 
-    public function installSite(string $title, string $url): void
+    public function installSite(): void
     {
+        $this->output->writeln('');
+        $questionSiteTitle = new Question('Title of website (alita) : ', 'alita');
+        $questionSiteUrl   = new Question('URL of website (alita.localhost) : ', 'alita.localhost');
+
+        $title = $this->helper->ask($this->input, $this->output, $questionSiteTitle);
+        $url   = $this->helper->ask($this->input, $this->output, $questionSiteUrl);
+
         $site = new Site();
         $site->setTitle($title)
             ->setUrl($url)

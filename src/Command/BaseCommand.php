@@ -6,6 +6,7 @@ namespace App\Command;
 
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\Console\Command\Command;
+use Symfony\Component\Console\Helper\QuestionHelper;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
 
@@ -17,12 +18,15 @@ class BaseCommand extends Command
 
     protected InputInterface $input;
 
+    protected QuestionHelper $helper;
+
     protected static $defaultName = 'alita:info';
 
     public function __construct(EntityManagerInterface $em, $name = null)
     {
-        $this->em = $em;
         parent::__construct($name);
+
+        $this->em = $em;
     }
 
     public function execute(InputInterface $input, OutputInterface $output): int
