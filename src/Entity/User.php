@@ -95,97 +95,59 @@ class User implements UserInterface
 
     use TimestampableTrait;
 
-    /**
-     * @return int|null
-     */
     public function getId(): ?int
     {
         return $this->id;
     }
 
-    /**
-     * @return string|null
-     */
     public function getLastName(): ?string
     {
         return $this->lastName;
     }
 
-    /**
-     * @param string $lastName
-     *
-     * @return User
-     */
-    public function setLastName(string $lastName): User
+    public function setLastName(string $lastName): self
     {
         $this->lastName = $lastName;
 
         return $this;
     }
 
-    /**
-     * @return string|null
-     */
     public function getFirstName(): ?string
     {
         return $this->firstName;
     }
 
-    /**
-     * @param string $firstName
-     *
-     * @return User
-     */
-    public function setFirstName(string $firstName): User
+    public function setFirstName(string $firstName): self
     {
         $this->firstName = $firstName;
 
         return $this;
     }
 
-    /**
-     * @return string|null
-     */
     public function getEmail(): ?string
     {
         return $this->email;
     }
 
-    /**
-     * @param string $email
-     *
-     * @return User
-     */
-    public function setEmail(string $email): User
+    public function setEmail(string $email): self
     {
         $this->email = $email;
 
         return $this;
     }
 
-    /**
-     * @return string|null
-     */
     public function getPassword(): ?string
     {
         return $this->password;
     }
 
-    /**
-     * @param string|null $password
-     *
-     * @return User
-     */
-    public function setPassword(?string $password): User
+    public function setPassword(?string $password): self
     {
         $this->password = $password ?? $this->getPassword();
 
         return $this;
     }
 
-    /**
-     * @return array
-     */
     public function getRoles(): array
     {
         $roles = $this->roles;
@@ -195,236 +157,154 @@ class User implements UserInterface
         return array_unique($roles);
     }
 
-    /**
-     * @param array $roles
-     *
-     * @return User
-     */
-    public function setRoles(array $roles): User
+    public function setRoles(array $roles): self
     {
         $this->roles = $roles;
 
         return $this;
     }
 
-    /**
-     * @param bool $active
-     *
-     * @return User
-     */
-    public function setActive(bool $active): User
+    public function setActive(bool $active): self
     {
         $this->active = $active;
 
         return $this;
     }
 
-    /**
-     * @return bool
-     */
     public function isActive(): bool
     {
         return $this->active;
     }
 
-    /**
-     * @param bool $forceRenewPassword
-     *
-     * @return User
-     */
-    public function setForceRenewPassword(bool $forceRenewPassword): User
+    public function setForceRenewPassword(bool $forceRenewPassword): self
     {
         $this->forceRenewPassword = $forceRenewPassword;
 
         return $this;
     }
 
-    /**
-     * @return bool
-     */
     public function isForceRenewPassword(): bool
     {
         return $this->forceRenewPassword;
     }
 
-    /**
-     * @return \DateTime|null
-     */
     public function getBlockedAt(): ?\DateTime
     {
         return $this->blockedAt;
     }
 
-    /**
-     * @param \DateTime $blockedAt
-     *
-     * @return User
-     */
-    public function setBlockedAt(\DateTime $blockedAt): User
+    public function setBlockedAt(\DateTime $blockedAt): self
     {
         $this->blockedAt = $blockedAt;
 
         return $this;
     }
 
-    /**
-     * @return string
-     */
     public function getBlockedBy(): string
     {
         return $this->blockedBy;
     }
 
-    /**
-     * @param string $blockedBy
-     *
-     * @return User
-     */
-    public function setBlockedBy(string $blockedBy): User
+    public function setBlockedBy(string $blockedBy): self
     {
         $this->blockedBy = $blockedBy;
 
         return $this;
     }
 
-    /**
-     * @return string
-     */
     public function getBlockedFor(): string
     {
         return $this->blockedFor;
     }
 
-    /**
-     * @param string $blockedFor
-     *
-     * @return User
-     */
-    public function setBlockedFor(string $blockedFor): User
+    public function setBlockedFor(string $blockedFor): self
     {
         $this->blockedFor = $blockedFor;
 
         return $this;
     }
 
-    /**
-     * @return int
-     */
     public function getTryToConnect(): int
     {
         return $this->tryToConnect;
     }
 
-    /**
-     * @param int $tryToConnect
-     *
-     * @return User
-     */
-    public function setTryToConnect(int $tryToConnect): User
+    public function setTryToConnect(int $tryToConnect): self
     {
         $this->tryToConnect = $tryToConnect;
 
         return $this;
     }
 
-    /**
-     * @return string|null
-     */
     public function getSalt(): ?string
     {
         return $this->salt ?? null;
     }
 
-    /**
-     * @param string $salt
-     *
-     * @return User
-     */
-    public function setSalt(string $salt): User
+    public function setSalt(string $salt): self
     {
         $this->salt = $salt;
 
         return $this;
     }
 
-    /**
-     * @return \DateTime|null
-     */
     public function getRenewAt(): ?\DateTime
     {
         return $this->renewAt ?? null;
     }
 
-    /**
-     * @param \DateTime $renewAt
-     *
-     * @return User
-     */
-    public function setRenewAt(?\DateTime $renewAt): User
+    public function setRenewAt(?\DateTime $renewAt): self
     {
         $this->renewAt = $renewAt;
 
         return $this;
     }
 
-    /**
-     * @return string
-     */
     public function getUsername(): string
     {
         return $this->email;
     }
 
-    /**
-     * @see UserInterface
-     */
     public function eraseCredentials()
     {
-        // If you store any temporary, sensitive data on the user, clear it here
-        // $this->plainPassword = null;
     }
 
-    /**
-     * @return bool
-     */
     public function isAdmin(): bool
     {
         return in_array('ROLE_ADMIN', $this->getRoles(), true);
     }
 
-    /**
-     * @return $this
-     */
-    public function generateSalt(): User
+    public function generateSalt(): self
     {
         $this->salt = uniqid('', true);
 
         return $this;
     }
 
-    /**
-     * @return string
-     */
+    public function getSite(): Site
+    {
+        return $this->site;
+    }
+
+    public function setSite(Site $site): self
+    {
+        $this->site = $site;
+
+        return $this;
+    }
+
     public function getName(): string
     {
         return $this->getFirstName().' '.$this->getLastName();
     }
 
-    /**
-     * @return User
-     */
-    public function upTryToConnect(): User
+    public function upTryToConnect(): self
     {
         ++$this->tryToConnect;
 
         return $this;
     }
 
-    /**
-     * @param array $aPRO_CODE
-     *
-     * @return bool
-     */
     public function hasRule(array $aPRO_CODE): bool
     {
         if ($this->isRoot()) {
@@ -440,9 +320,6 @@ class User implements UserInterface
         return false;
     }
 
-    /**
-     * @return bool
-     */
     public function isRoot(): bool
     {
         if (is_array($this->getRoles())) {

@@ -7,6 +7,7 @@ namespace App\Command\Alita;
 use App\Command\BaseCommand;
 use App\Entity\Site;
 use App\Entity\User;
+use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\Console\Helper\ProgressBar;
 use Symfony\Component\Console\Input\ArrayInput;
 use Symfony\Component\Console\Input\InputInterface;
@@ -14,20 +15,30 @@ use Symfony\Component\Console\Output\NullOutput;
 use Symfony\Component\Console\Output\OutputInterface;
 use Symfony\Component\Console\Question\ConfirmationQuestion;
 use Symfony\Component\Console\Question\Question;
+use Symfony\Component\Form\Exception\InvalidArgumentException;
+use Symfony\Component\Security\Core\Encoder\UserPasswordEncoderInterface;
 
 class InstallCommand extends BaseCommand
 {
     protected static $defaultName = 'alita:init';
 
-    private array $tablesAction = [
+    protected array $tablesAction = [
         'database' => ['action' => 'installDatabase',   'description' => 'Install database'],
         'sites'    => ['action' => 'installSite',       'description' => 'Install Site', 'class' => Site::class],
         'users'    => ['action' => 'installUser',       'description' => 'Install User', 'class' => User::class],
     ];
 
-    private bool $install = false;
+    protected bool $install = false;
 
-    private Site $site;
+    protected ?Site $site = null;
+
+    protected UserPasswordEncoderInterface $encoder;
+
+    public function __construct(EntityManagerInterface $em, UserPasswordEncoderInterface $encoder, $name = null)
+    {
+        $this->encoder = $encoder;
+        parent::__construct($em, $name);
+    }
 
     public function configure(): void
     {
@@ -146,7 +157,7 @@ EOF)
         }
     }
 
-    public function installDatabase(): void
+    private function installDatabase(): void
     {
         $command = $this->getApplication()->find('doctrine:database:create');
 
@@ -167,7 +178,7 @@ EOF)
         $command->run($args, new NullOutput());
     }
 
-    public function installSite(): void
+    private function installSite(): void
     {
         $this->output->writeln('');
         $questionSiteTitle = new Question('Title of website (alita) : ', 'alita');
@@ -184,6 +195,68 @@ EOF)
         ;
 
         $this->em->persist($site);
+        $this->em->flush();
+        $this->em->refresh($site);
+        $this->site = $site;
+    }
+
+    private function installUser(): void
+    {
+        $this->output->writeln('');
+        $this->output->writeln('Okay ! Please answer the following questions for creating super administrator');
+
+        $callbackValidString = function ($value): string {
+            if (!is_string($value) || empty($value)) {
+                throw new InvalidArgumentException('Value cannot be empty');
+            }
+
+            return (string) $value;
+        };
+
+        $callbackValidEmail = function ($value): string {
+            if (!is_string($value) || empty($value)) {
+                throw new InvalidArgumentException('Value can not be empty');
+            }
+
+            if (!filter_var($value, FILTER_VALIDATE_EMAIL)) {
+                throw new InvalidArgumentException('Value is not a email');
+            }
+
+            return (string) $value;
+        };
+
+        $questionUserLastName = new Question('Last name : ');
+        $questionUserLastName->setValidator($callbackValidString);
+
+        $questionUserFirstName = new Question('First name : ');
+        $questionUserFirstName->setValidator($callbackValidString);
+
+        $questionUserEmail = new Question('Email : ');
+        $questionUserEmail->setValidator($callbackValidEmail);
+
+        $lastname  = $this->helper->ask($this->input, $this->output, $questionUserLastName);
+        $firstname = $this->helper->ask($this->input, $this->output, $questionUserFirstName);
+        $email     = $this->helper->ask($this->input, $this->output, $questionUserEmail);
+
+        if (null === $this->site) {
+            $this->site = $this->em->getRepository(Site::class)->findAll()[0];
+        }
+
+        $user = new User();
+        $user
+            ->generateSalt()
+            ->setActive(true)
+            ->setFirstName($firstname)
+            ->setLastName($lastname)
+            ->setEmail($email)
+            ->setPassword($this->encoder->encodePassword($user, uniqid()))
+            ->setRoles(['ROLE_USER', 'ROLE_ADMIN', 'ROLE_SUPER_ADMIN'])
+            ->setSite($this->site)
+            ->setCreatedBy('register_alita')
+            ->setUpdatedBy('register_alita')
+        ;
+
+        $this->em->persist($user);
         $this->em->flush();
     }
 }
