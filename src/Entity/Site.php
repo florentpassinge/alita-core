@@ -228,9 +228,6 @@ class Site
         return $this->phone;
     }
 
-    /**
-     * @return $this
-     */
     public function setPhone(?string $phone): Site
     {
         $this->phone = $phone;
