@@ -1,4 +1,4 @@
 swiftmailer:
-    transport:  smtp
-    host:       mailcatcher
-    port:   1025
+    transport: '%env(MAIL_TRANSPORT)%'
+    host: '%env(MAIL_HOST)%'
+    port: '%env(MAIL_PORT)%'
