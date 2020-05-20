@@ -1,0 +1,8 @@
+$theme-colors: map-merge(
+    (
+        "login":    $login,
+        "gray":     $gray-400,
+        "register": $teal
+    ),
+    $theme-colors
+);

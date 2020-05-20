@@ -1,0 +1,49 @@
+{% trans_default_domain 'mail' %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    {% block stylesheets %}
+        <link href="https://fonts.googleapis.com/css?family=Nunito:200,200i,300,300i,400,400i,600,600i,700,700i,800,800i,900,900i" rel="stylesheet">
+        {% for file in encore_entry_css_files('console') %}
+            <link href="{{ absolute_url(asset(file)) }}" rel="stylesheet" />
+        {% endfor %}
+    {% endblock %}
+</head>
+<body class="m-auto w-100">
+    <nav class="navbar navbar-dark bg-primary">
+        <span class="navbar-brand text-center w-100">{% block title %}{% endblock %}</span>
+    </nav>
+    <div class="container">
+        {% block content_email %}{% endblock %}
+        {% if emailSubtitution is defined %}
+            <div class="row bg-gray-300 d-block pt-2 pl-3 pr-3">
+                <p>{{ 'mail.emailsubtitution'|trans() }}</p>
+                {% set typeEmail = ['aTo', 'aCc', 'aBcc'] %}
+                {% for type in typeEmail %}
+                    {% if emailSubtitution[type] is defined and emailSubtitution[type]|length > 0%}
+                        <p><u>{{ ('mail.emailsubtitution.'~type)|trans()}}</u></p>
+                        <ul>
+                            {% for email,name in emailSubtitution[type] %}
+                                <li>{{ email }}
+                                    {% if name is not null %}
+                                        - {{ name }}
+                                    {% endif %}
+                                </li>
+                            {% endfor %}
+                        </ul>
+                        <br/>
+                    {% endif %}
+                {% endfor %}
+            </div>
+        {% endif %}
+    </div>
+<div style="background-color: whitesmoke; width: 800px;margin: 0 auto; padding: 10px 20px;">
+
+    {% block main %}
+    {% endblock %}
+</div>
+
+</body>
+</html>
