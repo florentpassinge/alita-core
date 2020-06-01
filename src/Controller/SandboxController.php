@@ -4,6 +4,8 @@ declare(strict_types = 1);
 
 namespace App\Controller;
 
+use App\Entity\User;
+use App\Service\alita\ForgotMailerService;
 use App\Service\alita\MailerService;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Response;
@@ -16,8 +18,6 @@ class SandboxController extends AbstractController
 {
     /**
      * @Route("/send-mail", name="sandbox_sendmail")
-     *
-     * @return Response
      */
     final public function sendMail(MailerService $mailer): Response
     {
@@ -28,5 +28,20 @@ class SandboxController extends AbstractController
         $mailer->send();
 
         return new Response('Mail sended');
+    }
+
+    /**
+     * @Route("/send-forgot-mail/{id}", name="sandbox_sendforgotmail")
+     */
+    final public function sendForgotMail(int $id, ForgotMailerService $mailer): Response
+    {
+        /** @var User $user */
+        $user = $this->getDoctrine()->getRepository(User::class)->find($id);
+        if (null === $user) {
+            return new Response('User not found');
+        }
+        $mailer->send($user);
+
+        return new Response('Forgot Mail sended');
     }
 }
