@@ -15,7 +15,7 @@ use Symfony\Component\Security\Core\User\UserInterface;
 use Symfony\Contracts\Translation\TranslatorInterface;
 
 /**
- * Class Mailer.
+ * Class ForgotMailerService.
  */
 class ForgotMailerService
 {

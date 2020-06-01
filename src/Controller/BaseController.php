@@ -8,7 +8,6 @@ use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\EventDispatcher\EventDispatcherInterface;
 use Symfony\Component\HttpFoundation\Session\Session;
-use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Contracts\Translation\TranslatorInterface;
 
 /**
@@ -38,12 +37,5 @@ class BaseController extends AbstractController
     public function trans(string $id, array $param = [], string $domain = 'alita', ?string $local = null): string
     {
         return $this->translator->trans($id, $param, $domain, $local);
-    }
-
-    /**
-     * @Route("/",name="front_home")
-     */
-    public function home()
-    {
     }
 }

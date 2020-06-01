@@ -1,4 +1,3 @@
-// Sidebar
 .sidebar {
   width: $sidebar-collapsed-width;
   min-height: 100vh;
@@ -27,13 +26,11 @@
         font-weight: 700;
       }
     }
-    // Accordion
     .collapse {
       position: absolute;
       left: calc(#{$sidebar-collapsed-width} + #{$grid-gutter-width} / 2);
       z-index: 1;
       top: 2px;
-      // Grow In Animation
       @extend .animated--grow-in;
       .collapse-inner {
         border-radius: $border-radius;
@@ -146,7 +143,6 @@
   .sidebar {
     width: $sidebar-base-width !important;
     .nav-item {
-      // Accordion
       .collapse {
         position: relative;
         left: 0;
@@ -180,7 +176,6 @@
           font-size: 0.85rem;
           display: inline;
         }
-        // Accordion Arrow Icon
         &[data-toggle="collapse"] {
           color: black;
           fill: black;
@@ -215,13 +210,11 @@
       overflow: visible;
       width: $sidebar-collapsed-width !important;
       .nav-item {
-        // Accordion
         .collapse {
           position: absolute;
           left: calc(#{$sidebar-collapsed-width} + #{$grid-gutter-width} / 2);
           z-index: 1;
           top: 2px;
-          // Grow In Animation for Toggled State
           animation-name: growIn;
           animation-duration: 200ms;
           animation-timing-function: transform cubic-bezier(.18,1.25,.4,1), opacity cubic-bezier(0,1,.4,1);
@@ -272,9 +265,6 @@
   }
 }
 
-// Sidebar Color Variants
-
-// Sidebar Light
 .sidebar-light {
   .sidebar-brand {
     color: $gray-700;
@@ -299,7 +289,6 @@
           color: $gray-700;
         }
       }
-      // Accordion
       &[data-toggle="collapse"]::after {
         color: $gray-500;
       }
@@ -313,7 +302,6 @@
       }
     }
   }
-  // Color the sidebar toggler
   #sidebarToggle {
     background-color: $gray-200;
     &::after {
@@ -324,8 +312,6 @@
     }
   }
 }
-
-// Sidebar Dark
 .sidebar-dark {
   .sidebar-brand {
     color: $white;
@@ -350,7 +336,6 @@
           color: $white;
         }
       }
-      // Accordion
       &[data-toggle="collapse"]::after {
         color: fade-out($white, 0.5);
       }
@@ -364,7 +349,6 @@
       }
     }
   }
-  // Color the sidebar toggler
   #sidebarToggle {
     background-color: fade-out($white, 0.8);
     &::after {
