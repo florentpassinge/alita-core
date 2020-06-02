@@ -4,6 +4,7 @@ declare(strict_types = 1);
 
 namespace App\Service\alita;
 
+use App\Entity\Site;
 use App\Entity\User;
 use Carbon\Carbon;
 use Doctrine\ORM\EntityManagerInterface;
@@ -47,7 +48,7 @@ class ForgotMailerService
         $this->translator = $translator;
     }
 
-    public function send(User $user): void
+    public function send(User $user, bool $needIp = true, ?Site $site = null): void
     {
         if (null === $user) {
             new \InvalidArgumentException('Error : $user can\'t be nullable');
@@ -59,6 +60,10 @@ class ForgotMailerService
 
         if (null !== $user->getBlockedAt()) {
             throw new AccountExpiredException('Error : This account has been blocked.');
+        }
+
+        if (null !== $site && $site instanceof Site) {
+            $this->router->getContext()->setHost($site->getUrl());
         }
 
         $time = Carbon::now()->addHours(2);
@@ -75,8 +80,11 @@ class ForgotMailerService
 
         $aParameters = [
             'link' => $link,
-            'ip'   => $this->request->getCurrentRequest()->getClientIp(),
         ];
+
+        if ($needIp) {
+            $aParameters += ['ip' => $this->request->getCurrentRequest()->getClientIp()];
+        }
 
         $subject = $this->translator->trans($this->subject, [], 'mail');
 
