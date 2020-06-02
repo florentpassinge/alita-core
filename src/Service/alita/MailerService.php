@@ -42,7 +42,7 @@ class MailerService
 
     private ?string $subject;
 
-    private ?string $body;
+    private ?string $body = null;
 
     private array $aAttachment = [];
 
