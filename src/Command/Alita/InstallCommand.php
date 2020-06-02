@@ -7,6 +7,7 @@ namespace App\Command\Alita;
 use App\Command\BaseCommand;
 use App\Entity\Site;
 use App\Entity\User;
+use App\Service\alita\ForgotMailerService;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\Console\Helper\ProgressBar;
 use Symfony\Component\Console\Input\ArrayInput;
@@ -32,12 +33,19 @@ class InstallCommand extends BaseCommand
 
     protected ?Site $site = null;
 
+    protected ForgotMailerService $forgotService;
+
     protected UserPasswordEncoderInterface $encoder;
 
-    public function __construct(EntityManagerInterface $em, UserPasswordEncoderInterface $encoder, $name = null)
-    {
-        $this->encoder = $encoder;
+    public function __construct(
+        EntityManagerInterface $em,
+        UserPasswordEncoderInterface $encoder,
+        ForgotMailerService $forgotService,
+        $name = null
+    ) {
         parent::__construct($em, $name);
+        $this->encoder       = $encoder;
+        $this->forgotService = $forgotService;
     }
 
     public function configure(): void
@@ -258,5 +266,10 @@ EOF)
 
         $this->em->persist($user);
         $this->em->flush();
+        $this->em->refresh($user);
+
+        $this->forgotService->send($user, false, $this->site);
+
+        $this->output->writeln('<info>Mail sended for initialize password</info>');
     }
 }
