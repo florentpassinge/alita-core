@@ -1,7 +1,8 @@
-.rotate-15 {
-  transform: rotate(15deg);
-}
-
-.rotate-n-15 {
-  transform: rotate(-15deg);
+.rotate{
+  &-15 {
+    transform: rotate(15deg);
+  }
+  &-n-15 {
+    transform: rotate(-15deg);
+  }
 }
