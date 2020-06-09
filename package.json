@@ -25,6 +25,7 @@
         "password-validator": "^5.0.3",
         "popper": "^1.0.1",
         "popper.js": "^1.16.1",
-        "validator": "^13.0.0"
+        "validator": "^13.0.0",
+        "websocket-extensions": "^0.1.4"
     }
 }
