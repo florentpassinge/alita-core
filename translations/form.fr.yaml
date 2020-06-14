@@ -1,0 +1,11 @@
+form:
+  button:
+    updatepassword: Modifier le mot de passe
+  label:
+    password: Mot de passe
+    passwordConfirm: Répéter le mot de passe
+  link:
+    forgotpassword: Mot de passe oublié
+    login: Se connecter
+  title:
+    renewpassword: Modification du mot de passe

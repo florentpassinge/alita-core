@@ -1,0 +1,7 @@
+error:
+  title: Erreur !
+  form:
+    fields:
+      password:
+        notSimilar: Les mots de passes ne sont pas identiques
+      notvalids: Les champs suivants ne sont pas valides

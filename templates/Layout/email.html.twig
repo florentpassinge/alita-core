@@ -19,7 +19,7 @@
         {% block content_email %}{% endblock %}
         {% if emailSubtitution is defined %}
             <div class="row bg-gray-300 d-block pt-2 pl-3 pr-3">
-                <p>{{ 'mail.emailsubtitution'|trans() }}</p>
+                <p>{{ 'mail.emailsubtitution.title'|trans() }}</p>
                 {% set typeEmail = ['aTo', 'aCc', 'aBcc'] %}
                 {% for type in typeEmail %}
                     {% if emailSubtitution[type] is defined and emailSubtitution[type]|length > 0%}
