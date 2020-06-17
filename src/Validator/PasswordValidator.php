@@ -13,10 +13,15 @@ use Symfony\Contracts\Translation\TranslatorInterface;
  */
 class PasswordValidator extends ConstraintValidator
 {
-    private TranslatorInterface $translator;
+    protected TranslatorInterface $translator;
+
+    protected int $minLength;
+    protected int $maxLength;
 
     public function __construct(TranslatorInterface $translator)
     {
+        $this->maxLength  = 12;
+        $this->minLength  = 8;
         $this->translator = $translator;
     }
 
@@ -24,9 +29,11 @@ class PasswordValidator extends ConstraintValidator
     {
         /** @var Password $constraint */
         if (null === $password && $constraint->authorizedNull) {
-        } else {
-            if (null === $password) {
-                $this->context
+            return;
+        }
+
+        if (null === $password) {
+            $this->context
                     ->buildViolation(
                         $this->translator->trans(
                             $constraint->messageVarNotExist,
@@ -34,43 +41,43 @@ class PasswordValidator extends ConstraintValidator
                             'error')
                     )
                     ->addViolation();
-            }
+        }
 
-            if (strlen($password) < 8 || strlen($password) > 12) {
-                $this->context->buildViolation(
+        if (strlen($password) < $this->minLength || strlen($password) > $this->maxLength) {
+            $this->context->buildViolation(
                     $this->translator->trans($constraint->messageFieldLength,
-                        ['%field%' => 'Mot de passe', '%min%' => 8, '%max%' => 12],
+                        ['%field%' => 'Mot de passe', '%min%' => $this->minLength, '%max%' => $this->maxLength],
                         'error'))
                     ->addViolation();
-            }
+        }
 
-            if (!preg_match('/(\d)/', $password)) {
-                $this->context->buildViolation(
+        if (!preg_match('/(\d)/', $password)) {
+            $this->context->buildViolation(
                     $this->translator->trans(
                         $constraint->messageFieldContains,
                         ['%field%' => 'Mot de passe', '%contains%' => 'un chiffre'],
                         'error'))
                     ->addViolation();
-            }
+        }
 
-            if (!preg_match('#[a-z]+#', $password)) {
-                $this->context->buildViolation(
+        if (!preg_match('#[a-z]+#', $password)) {
+            $this->context->buildViolation(
                     $this->translator->trans(
                         $constraint->messageFieldContains,
                         ['%field%' => 'Mot de passe', '%contains%' => 'une minuscule'],
                         'error'))
                     ->addViolation();
-            }
-            if (!preg_match('#[A-Z]+#', $password)) {
-                $this->context->buildViolation(
+        }
+        if (!preg_match('#[A-Z]+#', $password)) {
+            $this->context->buildViolation(
                     $this->translator->trans(
                         $constraint->messageFieldContains,
                         ['%field%' => 'Mot de passe', '%contains%' => 'une majuscule   '],
                         'error'))
                     ->addViolation();
-            }
-            if (!preg_match("#\W+#", $password)) {
-                $this->context->buildViolation(
+        }
+        if (!preg_match("#\W+#", $password)) {
+            $this->context->buildViolation(
                     $this->translator->trans(
                         $constraint->messageFieldContains,
                         [
@@ -80,7 +87,6 @@ class PasswordValidator extends ConstraintValidator
                         ],
                         'error'))
                     ->addViolation();
-            }
         }
     }
 }

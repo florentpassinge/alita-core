@@ -1,7 +1,16 @@
 error:
-  title: Erreur !
+  entity:
+    user:
+      notfound: Utilisateur non trouvé
   form:
+    entity:
+      user:
+        salt: Vérification de l'utilisateur impossible.
     fields:
+      contains: Le champ " %field% " doit contenir au moins %contains%
+      length: Le champ " %field% " doit contenir entre " %min% " et " %max% " caractères
+      notfound: Le champ " %field% " n'est pas présents
+      notvalids: Les champs suivants ne sont pas valides
       password:
         notSimilar: Les mots de passes ne sont pas identiques
-      notvalids: Les champs suivants ne sont pas valides
+  title: Erreur !

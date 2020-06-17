@@ -73,8 +73,8 @@ class ForgotMailerService
 
         $link = $this->router->generate('alita_resetPassword',
             [
-                'user_id' => $user->getId(),
-                'data'    => urlencode(base64_encode($user->getSalt())),
+                'id'   => $user->getId(),
+                'data' => urlencode(base64_encode($user->getSalt())),
             ],
             UrlGeneratorInterface::ABSOLUTE_URL);
 

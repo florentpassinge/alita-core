@@ -1,8 +1,8 @@
 import $ from 'jquery';
 
-import {Modal} from './modal.js';
-import passwordValidator from 'password-validator';
-import validator from 'validator';
+import {Modal}              from './modal.js';
+import passwordValidator    from 'password-validator';
+import validator            from 'validator';
 
 export class Form
 {

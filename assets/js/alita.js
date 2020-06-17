@@ -4,7 +4,7 @@ import {Animated}   from './atila/animated';
 import {Form}       from './atila/form';
 import {Modal}      from './atila/modal';
 import {Phone}      from './atila/phone';
-import {Toolkit}      from './atila/toolkit';
+import {Toolkit}    from './atila/toolkit';
 
 export class Alita {
     constructor () {

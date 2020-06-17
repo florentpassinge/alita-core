@@ -30,13 +30,14 @@ class LoginController extends BaseController
      * @return array|RedirectResponse
      */
     public function resetPassword(
-        User $user,
+        int $id,
         string $data,
         Request $request,
         UserPasswordEncoderInterface $encoder
     ) {
+        $user       = $this->getDoctrine()->getRepository(User::class)->find($id);
         $parameters = [];
-        if ($user instanceof User) {
+        if (null !== $user) {
             $salt = base64_decode(urldecode($data));
 
             if ($salt === $user->getSalt()) {
@@ -44,7 +45,7 @@ class LoginController extends BaseController
                     $parameters['error']['message'] = 'error.entity.user.link.renew.notvalid';
                 }
             } else {
-                $parameters['error']['message'] = 'error.entity.user.salt.notvalid';
+                $parameters['error']['message'] = 'error.form.entity.user.salt';
             }
         } else {
             $parameters['error']['message'] = 'error.entity.user.notfound';
