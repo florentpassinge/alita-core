@@ -18,10 +18,10 @@ class PasswordValidator extends ConstraintValidator
     protected int $minLength;
     protected int $maxLength;
 
-    public function __construct(TranslatorInterface $translator)
+    public function __construct(TranslatorInterface $translator, int $formPasswordMinChar, int $formPasswordMaxChar)
     {
-        $this->maxLength  = 12;
-        $this->minLength  = 8;
+        $this->maxLength  = $formPasswordMaxChar;
+        $this->minLength  = $formPasswordMinChar;
         $this->translator = $translator;
     }
 

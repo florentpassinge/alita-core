@@ -32,8 +32,8 @@ export class Form
         };
 
         this.passwordFormat = new passwordValidator();
-        this.passwordFormat.is().min(8)
-            .is().max(12)
+        this.passwordFormat.is().min(form_password_min_char)
+            .is().max(form_password_max_char)
             .has().uppercase()
             .has().lowercase()
             .has().digits()
