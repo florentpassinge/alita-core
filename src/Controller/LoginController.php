@@ -6,7 +6,9 @@ namespace App\Controller;
 
 use App\Entity\User;
 use App\Event\UserEvent;
+use App\Form\Login\ForgotPasswordType;
 use App\Form\Login\ResetPasswordType;
+use App\Service\alita\ForgotMailerService;
 use Carbon\Carbon;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
 use Symfony\Component\HttpFoundation\RedirectResponse;
@@ -79,9 +81,37 @@ class LoginController extends BaseController
     }
 
     /**
+     * @Template()
      * @Route("forgotPassword", name="alita_forgotPassword")
      */
-    public function forgotPassword()
+    public function forgotPassword(Request $request, ForgotMailerService $forgotMailerService): array
     {
+        $form = $this->createForm(ForgotPasswordType::class);
+        $form->handleRequest($request);
+
+        if ($form->isSubmitted() and $form->isValid()) {
+        }
+        /*
+                $error = null;
+                if ($request->isMethod(Request::METHOD_POST)) {
+                    $email = $request->request->get('email');
+
+                    $user = $this->em->getRepository(User::class)->findOneBy(['email' => $email]);
+                    if (null === $user) {
+                        $error = 'error.entity.user.notfound';
+                    }
+
+                    if ($user->getBlockedAt()) {
+                        $error = 'error.user.blocked';
+                    }
+
+                    if (null === $error) {
+                        $forgotMailerService->send($user);
+                        $this->addFlash('success', $this->trans('alita.forgotpassword'));
+                    }
+                }
+        */
+
+        return ['form' => $form->createView()];
     }
 }

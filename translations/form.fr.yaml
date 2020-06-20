@@ -1,11 +1,14 @@
 form:
   button:
+    send: Envoyer
     updatepassword: Modifier le mot de passe
   label:
+    email: Adresse mail
     password: Mot de passe
     passwordConfirm: Répéter le mot de passe
   link:
     forgotpassword: Mot de passe oublié
     login: Se connecter
   title:
+    forgotpassword: Mot de passe oublié
     renewpassword: Modification du mot de passe

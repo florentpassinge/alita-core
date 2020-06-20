@@ -4,6 +4,9 @@ error:
       notfound: Utilisateur non trouvé
   form:
     entity:
+      notfound:
+        entity: Impossible de trouver l'objet correspondant
+        user: Impossible de trouver l'utilisateur correspondant
       user:
         salt: Vérification de l'utilisateur impossible.
     fields:
