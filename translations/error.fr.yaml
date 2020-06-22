@@ -1,6 +1,7 @@
 error:
   entity:
     user:
+      blocked: Utilisateur bloqué ! Merci de vous rapprocher d'un administrateur
       notfound: Utilisateur non trouvé
   form:
     entity:

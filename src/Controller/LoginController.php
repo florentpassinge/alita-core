@@ -11,6 +11,7 @@ use App\Form\Login\ResetPasswordType;
 use App\Service\alita\ForgotMailerService;
 use Carbon\Carbon;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
+use Symfony\Component\Form\FormError;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Routing\Annotation\Route;
@@ -89,28 +90,18 @@ class LoginController extends BaseController
         $form = $this->createForm(ForgotPasswordType::class);
         $form->handleRequest($request);
 
-        if ($form->isSubmitted() and $form->isValid()) {
+        if ($form->isSubmitted() && $form->isValid()) {
+            $email = $form->getData()['email'];
+            /** @var User $user */
+            $user = $this->em->getRepository(User::class)->findOneBy(['email' => $email]);
+
+            if ($user->getBlockedAt()) {
+                $form->addError((new FormError($this->trans('error.entity.user.blocked', [], 'error'))));
+            } else {
+                $forgotMailerService->send($user);
+                $this->addFlash('success', $this->trans('alita._flash.forgotpassword'));
+            }
         }
-        /*
-                $error = null;
-                if ($request->isMethod(Request::METHOD_POST)) {
-                    $email = $request->request->get('email');
-
-                    $user = $this->em->getRepository(User::class)->findOneBy(['email' => $email]);
-                    if (null === $user) {
-                        $error = 'error.entity.user.notfound';
-                    }
-
-                    if ($user->getBlockedAt()) {
-                        $error = 'error.user.blocked';
-                    }
-
-                    if (null === $error) {
-                        $forgotMailerService->send($user);
-                        $this->addFlash('success', $this->trans('alita.forgotpassword'));
-                    }
-                }
-        */
 
         return ['form' => $form->createView()];
     }
