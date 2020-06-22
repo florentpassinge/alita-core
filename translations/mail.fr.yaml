@@ -1,5 +1,8 @@
-mail.emailsubtitution: 'Liste des destinataires originels :'
-mail.emailsubtitution.aCc: Destinataires en copie
-mail.emailsubtitution.aCci: Destinataires en copie caché
-mail.emailsubtitution.aTo: Destinataires initiaux
-mail.subject.forgotpassword: Mot de passe oublié
+mail:
+  emailsubtitution:
+    aCc: Destinataires en copie
+    aCci: Destinataires en copie caché
+    aTo: Destinataires initiaux
+    title: 'Liste des destinataires originels :'
+  subject:
+    forgotpassword: Mot de passe oublié

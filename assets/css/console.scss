@@ -1,0 +1,24 @@
+@charset "UTF-8";
+
+@import "console/_variables.scss";
+@import "console/_functions.scss";
+
+@import "~bootstrap/scss/bootstrap";
+
+@import "~@fortawesome/fontawesome-free/css/all.min.css";
+
+@import "console/_mixins.scss";
+@import "console/_global.scss";
+@import "console/_utilities.scss";
+
+@import "console/dropdowns.scss";
+@import "console/navs.scss";
+@import "console/buttons.scss";
+@import "console/cards.scss";
+@import "console/charts.scss";
+@import "console/_login.scss";
+@import "console/_footer.scss";
+
+@import "animated.scss";
+
+@import "console/_modal.scss";
