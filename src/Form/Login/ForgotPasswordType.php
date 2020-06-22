@@ -35,7 +35,7 @@ class ForgotPasswordType extends AbstractType
                 'translation_domain' => 'form',
                 'constraints'        => [
                     new Email(),
-                    new  CheckEntity(User::class, 'email', 'error.form.entity.notfound.user', [
+                    new CheckEntity(User::class, 'email', 'error.form.entity.notfound.user', [
                         'active' => true,
                     ]),
                 ],
