@@ -17,7 +17,7 @@
     {% endblock %}
 </head>
 <body class="{{ bg_color }}">
-    <div class="container">
+    <main class="container" role="main">
         <div class="row justify-content-center">
             <div class="col-xl-10 col-lg-12 col-md-9">
                 <div class="card o-hidden border-0 shadow-lg my-5">
@@ -28,24 +28,9 @@
                 </div>
             </div>
         </div>
-    </div>
-    <div class="animated animated-robot js-animate" id="alita-robot">
-        <div class="animated-background">&nbsp;</div>
-        <svg role="img" aria-hidden="true">
-            <use xlink:href="#alita-robot-svg"></use>
-        </svg>
-    </div>
-    <div id="modal" class="invisible">
-        <div id="modal-container">
-            <div id="modal-entete">
-                <div id="modal-title"></div>
-                <div id="modal-action">
-                    <i class="fa fa-times-circle modal-close"></i>
-                </div>
-            </div>
-            <div id="modal-content"></div>
-        </div>
-    </div>
+    </main>
+
+    {% include '_blocks/content/modal.html.twig' %}
 
     {% include '_blocks/alert/alert.html.twig' %}
 
