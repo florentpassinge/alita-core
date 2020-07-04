@@ -9,12 +9,14 @@
         <div class="col-lg-6">
             <div class="p-5">
                 <div class="text-center">
-                    <h1 class="h4 text-gray-900 mb-4">{{ 'form.title.login'|trans() }}</h1>
+                    <h1 class="h4 text-gray-900 mb-4">{{ 'form.title.login'|trans }}</h1>
                 </div>
                 {% if error %}
                     <div class="alert alert-danger">{{ error.messageKey|trans(error.messageData, 'error')|raw }}</div>
                 {% endif %}
-                {% if not app.session.has('disabledFormLogin') or (app.session.has('disabledFormLogin') and not app.session.get('disabledFormLogin') ) %}
+                {% if not app.session.has('disabledFormLogin')
+                    or (app.session.has('disabledFormLogin') and not app.session.get('disabledFormLogin') )
+                %}
                     <form class="js-animated" data-action="submit" data-item="alita-robot" method="POST" id="form_login">
                         <div class="form-group">
                             <input type="email" name="email" id="email" class="form-control form-control-user"

@@ -43,7 +43,7 @@ class LoginController extends BaseController
     /**
      * @Route("/logout", name="alita_logout")
      */
-    public function logout()
+    public function logout(): void
     {
     }
 
