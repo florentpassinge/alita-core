@@ -35,7 +35,7 @@ class SandboxController extends AbstractController
      */
     final public function sendForgotMail(int $id, ForgotMailerService $mailer): Response
     {
-        /** @var User $user */
+        /** @var User|null $user */
         $user = $this->getDoctrine()->getRepository(User::class)->find($id);
         if (null === $user) {
             return new Response('User not found');

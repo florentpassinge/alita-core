@@ -23,8 +23,10 @@ class LoginController extends BaseController
     /**
      * @Template()
      * @Route("/login", name="alita_login")
+     *
+     * @return array|RedirectResponse
      */
-    public function login(AuthenticationUtils $authenticationUtils): array
+    public function login(AuthenticationUtils $authenticationUtils)
     {
         if ($this->getUser()) {
             if ($this->getUser()->isAdmin()) {

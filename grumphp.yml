@@ -35,7 +35,7 @@ parameters:
     phpstan:
       autoload_file: './config/bootstrap.php'
       configuration: ~
-      level: 2
+      level: 5
       force_patterns: []
       ignore_patterns: []
       triggered_by: ['php']
