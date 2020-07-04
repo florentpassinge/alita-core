@@ -2,6 +2,12 @@ error:
   entity:
     user:
       blocked: Utilisateur bloqué ! Merci de vous rapprocher d'un administrateur
+      emailnotfound: Adresse mail non trouvée
+      login:
+        blocked: 'Votre compte a été bloqué.<br>Raison: %reason%<br> Merci de vous rapprocher d''un administrateur'
+        connectmax: Nombre maximum d'essai atteint
+        failed: Adresse mail / mot de passe invalide
+        preblocked: Attention! A la prochaine erreur votre compte sera bloqué
       notfound: Utilisateur non trouvé
   form:
     entity:
@@ -9,6 +15,7 @@ error:
         entity: Impossible de trouver l'objet correspondant
         user: Impossible de trouver l'utilisateur correspondant
       user:
+        blocked: Connexion impossible. Merci de ré-initialiser votre mot de passe
         salt: Vérification de l'utilisateur impossible.
     fields:
       contains: Le champ " %field% " doit contenir au moins %contains%

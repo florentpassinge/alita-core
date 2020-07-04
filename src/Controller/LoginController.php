@@ -16,13 +16,34 @@ use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\Security\Core\Encoder\UserPasswordEncoderInterface;
+use Symfony\Component\Security\Http\Authentication\AuthenticationUtils;
 
 class LoginController extends BaseController
 {
     /**
+     * @Template()
      * @Route("/login", name="alita_login")
      */
-    public function login()
+    public function login(AuthenticationUtils $authenticationUtils): array
+    {
+        if ($this->getUser()) {
+            if ($this->getUser()->isAdmin()) {
+                return $this->redirectToRoute('alita_dashboard');
+            }
+
+            return $this->redirectToRoute('front_index');
+        }
+
+        $error        = $authenticationUtils->getLastAuthenticationError();
+        $lastUsername = $authenticationUtils->getLastUsername();
+
+        return ['last_email' => $lastUsername, 'error' => $error];
+    }
+
+    /**
+     * @Route("/logout", name="alita_logout")
+     */
+    public function logout(): void
     {
     }
 

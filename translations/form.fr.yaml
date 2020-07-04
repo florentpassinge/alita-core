@@ -1,5 +1,6 @@
 form:
   button:
+    login: Se connecter
     send: Envoyer
     updatepassword: Modifier le mot de passe
   label:
@@ -11,4 +12,5 @@ form:
     login: Se connecter
   title:
     forgotpassword: Mot de passe oublié
+    login: Connexion
     renewpassword: Modification du mot de passe
