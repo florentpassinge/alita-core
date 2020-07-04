@@ -27,12 +27,14 @@ class BlockExtension extends AbstractExtension
         $this->request        = $request;
         $this->siteRepository = $siteRepository;
 
-        /** @var Site $site */
-        $site = $siteRepository->findOneBy([
-            'url' => $request->getCurrentRequest()->getHost(),
-        ]);
-        if (null !== $site) {
-            $this->site = $site;
+        if (null !== $request->getCurrentRequest()) {
+            /** @var Site $site */
+            $site = $siteRepository->findOneBy([
+                'url' => $request->getCurrentRequest()->getHost(),
+            ]);
+            if (null !== $site) {
+                $this->site = $site;
+            }
         }
     }
 
