@@ -97,14 +97,14 @@ class LoginFormAuthenticator extends AbstractFormLoginAuthenticator
             ->findOneBy(['email' => $credentials['email']]);
 
         if (!$user) {
-            throw new CustomUserMessageAuthenticationException('form.generic.error.emailnotfound');
+            throw new CustomUserMessageAuthenticationException('error.entity.user.emailnotfound');
         }
 
         if ($user->getBlockedAt()) {
             $session = new Session();
             $session->set('disabledFormLogin', true);
             if ($user->getBlockedFor()) {
-                throw new CustomUserMessageAuthenticationException('form.login.user.blocked.reason', ['%reason%' => $user->getBlockedFor()]);
+                throw new CustomUserMessageAuthenticationException('error.entity.user.login.blocked', ['%reason%' => $user->getBlockedFor()]);
             }
 
             throw new CustomUserMessageAuthenticationException('form.login.user.blocked');
@@ -123,11 +123,11 @@ class LoginFormAuthenticator extends AbstractFormLoginAuthenticator
             $this->entityManager->refresh($user);
 
             if ($this->maxTryLogin - 1 === $user->getTryToConnect()) {
-                throw new CustomUserMessageAuthenticationException('form.login.user.preblocked');
+                throw new CustomUserMessageAuthenticationException('error.entity.user.login.preblocked');
             }
 
             if ($this->maxTryLogin === $user->getTryToConnect()) {
-                $reason = $this->translator->trans('error.user.max.connect', [], 'error');
+                $reason = $this->translator->trans('error.entity.user.login.connectmax', [], 'error');
                 $user->setBlockedFor($reason);
 
                 $event = new UserEvent($user);
@@ -136,10 +136,10 @@ class LoginFormAuthenticator extends AbstractFormLoginAuthenticator
                 $session = new Session();
                 $session->set('disabledFormLogin', true);
 
-                throw new CustomUserMessageAuthenticationException('form.login.user.blocked.reason', ['%reason%' => $user->getBlockedFor()]);
+                throw new CustomUserMessageAuthenticationException('error.entity.user.login.blocked', ['%reason%' => $user->getBlockedFor()]);
             }
 
-            return false;
+            throw new CustomUserMessageAuthenticationException('error.entity.user.login.failed');
         }
 
         $user->setTryToConnect(0);
