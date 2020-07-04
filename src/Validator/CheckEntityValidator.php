@@ -25,17 +25,18 @@ class CheckEntityValidator extends ConstraintValidator
 
     public function validate($value, Constraint $constraint): void
     {
-        /** @var CheckEntity $constraint */
-        $entity = $this->em->getRepository($constraint->entityName)
+        /** @var CheckEntity $checkEntity */
+        $checkEntity = clone $constraint;
+        $entity      = $this->em->getRepository($checkEntity->entityName)
             ->findOneBy(array_merge(
-                [$constraint->fieldName => $value],
-                $constraint->extraField,
+                [$checkEntity->fieldName => $value],
+                $checkEntity->extraField,
             ));
 
         if (null === $entity) {
             $this->context
                 ->buildViolation($this->translator->trans(
-                    $constraint->errorMessage,
+                    $checkEntity->errorMessage,
                     [],
                     'error'
                 ))

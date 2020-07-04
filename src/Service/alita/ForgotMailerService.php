@@ -48,7 +48,7 @@ class ForgotMailerService
         $this->translator = $translator;
     }
 
-    public function send(User $user, bool $needIp = true, ?Site $site = null): void
+    public function send(?User $user, bool $needIp = true, ?Site $site = null): void
     {
         if (null === $user) {
             new \InvalidArgumentException('Error : $user can\'t be nullable');
