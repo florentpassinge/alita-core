@@ -98,7 +98,7 @@ class MailerService
         return $this;
     }
 
-    public function addTo(string $address, ?string $name = null, $expend = true): self
+    public function addTo(string $address, ?string $name = null, bool $expend = true): self
     {
         $this->checkMail($address);
 
@@ -120,7 +120,7 @@ class MailerService
         return $this;
     }
 
-    public function addCc(string $address, ?string $name = null, $expend = true): self
+    public function addCc(string $address, ?string $name = null, bool $expend = true): self
     {
         $this->checkMail($address);
 
@@ -142,7 +142,7 @@ class MailerService
         return $this;
     }
 
-    public function addBcc(string $address, ?string $name = null, $expend = true): self
+    public function addBcc(string $address, ?string $name = null, bool $expend = true): self
     {
         $this->checkMail($address);
 
@@ -164,7 +164,7 @@ class MailerService
         return $this;
     }
 
-    public function addFrom(string $address, ?string $name = null, $expend = true): self
+    public function addFrom(string $address, ?string $name = null, bool $expend = true): self
     {
         $this->checkMail($address);
 
@@ -208,7 +208,7 @@ class MailerService
         return $this;
     }
 
-    public function getPart(): string
+    public function getPart(): ?string
     {
         return $this->alternativeText;
     }
@@ -221,7 +221,7 @@ class MailerService
         return $this;
     }
 
-    public function getSubject(): string
+    public function getSubject(): ?string
     {
         return $this->subject;
     }
@@ -250,15 +250,13 @@ class MailerService
         return $this;
     }
 
-    public function addAttachment(string $file, ?string $filename = null): self
+    public function addAttachment(string $file, string $filename): self
     {
         $attachment = new \Swift_Attachment($file);
 
-        if (null !== $filename) {
-            $attachment->setFilename($filename);
-        }
+        $attachment->setFilename($filename);
+        $attachment->setContentType((string) mime_content_type($filename));
 
-        $attachment->setContentType(mime_content_type($file));
         $this->aAttachment[] = $attachment;
 
         return $this;
@@ -274,7 +272,7 @@ class MailerService
         $this->preSend();
 
         $this->message
-            ->setSubject($this->getSubject())
+            ->setSubject((string) $this->getSubject())
             ->setCharset($this->charset);
 
         $this
@@ -346,17 +344,18 @@ class MailerService
         if (null !== $this->getBody()) {
             $this->setPart($this->getBody());
             $this->message
-                ->setBody($this->getBody(), 'text/html')
-                ->addPart($this->getPart(), 'text/plain');
+                ->setBody((string) $this->getBody(), 'text/html')
+                ->addPart((string) $this->getPart(), 'text/plain');
         } else {
             $this->encoreEntrypoint->reset();
 
-            $body = $this->template->render($this->templateView, $this->aParameters);
+            /** @var string $body */
+            $body = $this->template->render((string) $this->templateView, $this->aParameters);
             $this->setPart($body);
 
             $this->message
                 ->setBody($body, 'text/html')
-                ->addPart($this->getPart(), 'text/plain');
+                ->addPart((string) $this->getPart(), 'text/plain');
 
             $this->encoreEntrypoint->reset();
         }
@@ -404,7 +403,7 @@ class MailerService
     /**
      * @throws \InvalidArgumentException
      */
-    public function checkMail(string $address)
+    public function checkMail(string $address): void
     {
         if (!filter_var($address, FILTER_VALIDATE_EMAIL)) {
             throw new \InvalidArgumentException(sprintf('Error : %s is not a valid mail', $address));

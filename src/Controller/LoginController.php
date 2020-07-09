@@ -16,6 +16,7 @@ use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\Security\Core\Encoder\UserPasswordEncoderInterface;
+use Symfony\Component\Security\Core\User\UserInterface;
 use Symfony\Component\Security\Http\Authentication\AuthenticationUtils;
 
 class LoginController extends BaseController
@@ -28,8 +29,10 @@ class LoginController extends BaseController
      */
     public function login(AuthenticationUtils $authenticationUtils)
     {
-        if ($this->getUser()) {
-            if ($this->getUser()->isAdmin()) {
+        /** @var ?User $user */
+        $user = $this->getUser();
+        if ($user) {
+            if ($user->isAdmin()) {
                 return $this->redirectToRoute('alita_dashboard');
             }
 
@@ -61,13 +64,14 @@ class LoginController extends BaseController
         Request $request,
         UserPasswordEncoderInterface $encoder
     ) {
-        $user       = $this->getDoctrine()->getRepository(User::class)->find($id);
+        /** @var ?User $userTmp */
+        $userTmp    = $this->getDoctrine()->getRepository(User::class)->find($id);
         $parameters = [];
-        if (null !== $user) {
+        if (null !== $userTmp) {
             $salt = base64_decode(urldecode($data));
 
-            if ($salt === $user->getSalt()) {
-                if (Carbon::now()->gt($user->getRenewAt())) {
+            if ($salt === $userTmp->getSalt()) {
+                if (Carbon::now()->gt($userTmp->getRenewAt())) {
                     $parameters['error']['message'] = 'error.entity.user.link.renew.notvalid';
                 }
             } else {
@@ -78,14 +82,17 @@ class LoginController extends BaseController
         }
 
         if (!array_key_exists('error', $parameters)) {
+            /** @var User $user */
+            $user = $userTmp;
+            /** @var UserInterface $userInterface */
+            $userInterface          = $user;
             $parameters['showForm'] = true;
             $form                   = $this->createForm(ResetPasswordType::class);
             $form->handleRequest($request);
 
             if ($form->isSubmitted() && $form->isValid()) {
-                $data = $form->getData();
-
-                $password = $encoder->encodePassword($user, $data['password']);
+                $data     = $form->getData();
+                $password = $encoder->encodePassword($userInterface, $data['password']);
                 $user->setPassword($password)
                     ->setRenewAt(null);
 
