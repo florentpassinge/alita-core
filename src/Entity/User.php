@@ -200,7 +200,7 @@ class User implements UserInterface
         return $this;
     }
 
-    public function getBlockedBy(): string
+    public function getBlockedBy(): ?string
     {
         return $this->blockedBy;
     }
@@ -212,7 +212,7 @@ class User implements UserInterface
         return $this;
     }
 
-    public function getBlockedFor(): string
+    public function getBlockedFor(): ?string
     {
         return $this->blockedFor;
     }
@@ -260,12 +260,12 @@ class User implements UserInterface
         return $this;
     }
 
-    public function getUsername(): string
+    public function getUsername(): ?string
     {
         return $this->email;
     }
 
-    public function eraseCredentials()
+    public function eraseCredentials(): void
     {
     }
 

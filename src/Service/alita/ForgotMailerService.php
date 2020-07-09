@@ -8,6 +8,7 @@ use App\Entity\Site;
 use App\Entity\User;
 use Carbon\Carbon;
 use Doctrine\ORM\EntityManagerInterface;
+use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\RequestStack;
 use Symfony\Component\Routing\Generator\UrlGeneratorInterface;
 use Symfony\Component\Routing\RouterInterface;
@@ -63,7 +64,7 @@ class ForgotMailerService
         }
 
         if (null !== $site && $site instanceof Site) {
-            $this->router->getContext()->setHost($site->getUrl());
+            $this->router->getContext()->setHost((string) $site->getUrl());
         }
 
         $time = Carbon::now()->addHours(2);
@@ -74,7 +75,7 @@ class ForgotMailerService
         $link = $this->router->generate('alita_resetPassword',
             [
                 'id'   => $user->getId(),
-                'data' => urlencode(base64_encode($user->getSalt())),
+                'data' => urlencode(base64_encode((string) $user->getSalt())),
             ],
             UrlGeneratorInterface::ABSOLUTE_URL);
 
@@ -83,14 +84,16 @@ class ForgotMailerService
         ];
 
         if ($needIp) {
-            $aParameters += ['ip' => $this->request->getCurrentRequest()->getClientIp()];
+            /** @var Request $request */
+            $request = $this->request->getCurrentRequest();
+            $aParameters += ['ip' => $request->getClientIp()];
         }
 
         $subject = $this->translator->trans($this->subject, [], 'mail');
 
         $this->mailer
             ->setSubject($subject)
-            ->addTo($user->getEmail())
+            ->addTo((string) $user->getEmail())
             ->setBody(null, $this->template, $aParameters);
         $this->mailer->send();
     }

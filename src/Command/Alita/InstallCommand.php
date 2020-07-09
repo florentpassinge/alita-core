@@ -9,6 +9,7 @@ use App\Entity\Site;
 use App\Entity\User;
 use App\Service\alita\ForgotMailerService;
 use Doctrine\ORM\EntityManagerInterface;
+use Symfony\Bundle\FrameworkBundle\Console\Application;
 use Symfony\Component\Console\Helper\ProgressBar;
 use Symfony\Component\Console\Input\ArrayInput;
 use Symfony\Component\Console\Input\InputInterface;
@@ -167,7 +168,9 @@ EOF)
 
     private function installDatabase(): void
     {
-        $command = $this->getApplication()->find('doctrine:database:create');
+        /** @var Application $application */
+        $application = $this->getApplication();
+        $command     = $application->find('doctrine:database:create');
 
         $arguments = [
             'command' => 'doctrine:database:create',
@@ -176,7 +179,7 @@ EOF)
         $args = new ArrayInput($arguments);
         $command->run($args, new NullOutput());
 
-        $command = $this->getApplication()->find('doctrine:schema:create');
+        $command = $application->find('doctrine:schema:create');
 
         $arguments = [
             'command' => 'doctrine:schema:create',
@@ -247,7 +250,9 @@ EOF)
         $email     = $this->helper->ask($this->input, $this->output, $questionUserEmail);
 
         if (null === $this->site) {
-            $this->site = $this->em->getRepository(Site::class)->findAll()[0];
+            /** @var Site $site */
+            $site       = $this->em->getRepository(Site::class)->findAll()[0];
+            $this->site = $site;
         }
 
         $user = new User();
