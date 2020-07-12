@@ -26,6 +26,9 @@ class UserSubscriber implements EventSubscriberInterface
         $this->translator = $translator;
     }
 
+    /**
+     * @return string[]
+     */
     public static function getSubscribedEvents(): array
     {
         return [

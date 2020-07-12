@@ -21,6 +21,9 @@ class BaseController extends AbstractController
 
     protected TranslatorInterface $translator;
 
+    /**
+     * @var Session<string, mixed>
+     */
     protected Session $session;
 
     public function __construct(
@@ -34,6 +37,9 @@ class BaseController extends AbstractController
         $this->translator = $translator;
     }
 
+    /**
+     * @param array<string, string[]> $param
+     */
     public function trans(string $id, array $param = [], string $domain = 'alita', ?string $local = null): string
     {
         return $this->translator->trans($id, $param, $domain, $local);

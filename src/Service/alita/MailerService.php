@@ -28,14 +28,19 @@ class MailerService
 
     private Environment $template;
 
+    /** @var array<string, ?string> $aTo */
     private array $aTo = [];
 
+    /** @var array<string, ?string> $aCc */
     private array $aCc = [];
 
+    /** @var array<string, ?string> $aBcc */
     private array $aBcc = [];
 
+    /** @var array<string, ?string> $aFrom */
     private array $aFrom = [];
 
+    /** @var array<string, ?string> $aReplyTo */
     private array $aReplyTo = [];
 
     private ?string $alternativeText;
@@ -44,12 +49,14 @@ class MailerService
 
     private ?string $body = null;
 
+    /** @var \Swift_Attachment[] $aAttachment */
     private array $aAttachment = [];
 
     private string $charset = 'utf-8';
 
     private ?string $templateView;
 
+    /** @var array<string, mixed> $aParameters */
     private array $aParameters = [];
 
     private EntrypointLookupInterface $encoreEntrypoint;
@@ -108,11 +115,15 @@ class MailerService
         return $this->setTo($current);
     }
 
+    /** @return array<string, ?string> */
     public function getTo(): array
     {
         return $this->aTo;
     }
 
+    /**
+     * @param array<string, ?string> $aTo
+     */
     public function setTo(array $aTo): self
     {
         $this->aTo = $aTo;
@@ -130,11 +141,15 @@ class MailerService
         return $this->setCc($current);
     }
 
+    /** @return array<string, ?string> */
     public function getCc(): array
     {
         return $this->aCc;
     }
 
+    /**
+     * @param array<string, ?string> $aCc
+     */
     public function setCc(array $aCc): self
     {
         $this->aCc = $aCc;
@@ -152,11 +167,15 @@ class MailerService
         return $this->setBcc($current);
     }
 
+    /** @return array<string, ?string> */
     public function getBcc(): array
     {
         return $this->aBcc;
     }
 
+    /**
+     * @param array<string, ?string> $aBcc
+     */
     public function setBcc(array $aBcc): self
     {
         $this->aBcc = $aBcc;
@@ -174,11 +193,17 @@ class MailerService
         return $this->setFrom($current);
     }
 
+    /**
+     * @return array<string, ?string>
+     */
     public function getFrom(): array
     {
         return $this->aFrom;
     }
 
+    /**
+     * @param array<string, ?string> $aFrom
+     */
     public function setFrom(array $aFrom): self
     {
         $this->aFrom = $aFrom;
@@ -196,11 +221,15 @@ class MailerService
         return $this->setReplyTo($current);
     }
 
+    /** @return array<string, ?string> */
     public function getReplyTo(): array
     {
         return $this->aReplyTo;
     }
 
+    /**
+     * @param array<string, ?string> $aReplyTo
+     */
     public function setReplyTo(array $aReplyTo): self
     {
         $this->aReplyTo = $aReplyTo;
@@ -238,6 +267,9 @@ class MailerService
         return $this->body;
     }
 
+    /**
+     * @param array<string, mixed> $aParameters
+     */
     public function setBody(?string $text = null, ?string $template = null, array $aParameters = []): self
     {
         if (null !== $text) {
@@ -262,6 +294,7 @@ class MailerService
         return $this;
     }
 
+    /** @return \Swift_Attachment[] */
     public function getAttachements(): array
     {
         return $this->aAttachment;
