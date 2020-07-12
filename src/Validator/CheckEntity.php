@@ -12,10 +12,12 @@ use Symfony\Component\Validator\Constraint;
 class CheckEntity extends Constraint
 {
     public string $entityName;
+    /** @var array<string, mixed> $extraField */
     public array $extraField;
     public string $fieldName;
     public string $errorMessage = 'error.form.entity.notfound.entity';
 
+    /** @param array<string, mixed> $extraField */
     public function __construct(
         string $entityName,
         string $fieldName,

@@ -24,6 +24,7 @@ class InstallCommand extends BaseCommand
 {
     protected static $defaultName = 'alita:init';
 
+    /** @var array<string, string[]> $tablesAction */
     protected array $tablesAction = [
         'database' => ['action' => 'installDatabase',   'description' => 'Install database'],
         'sites'    => ['action' => 'installSite',       'description' => 'Install Site', 'class' => Site::class],

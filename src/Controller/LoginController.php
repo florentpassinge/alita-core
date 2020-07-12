@@ -25,7 +25,7 @@ class LoginController extends BaseController
      * @Template()
      * @Route("/login", name="alita_login")
      *
-     * @return array|RedirectResponse
+     * @return RedirectResponse|array<string, mixed>
      */
     public function login(AuthenticationUtils $authenticationUtils)
     {
@@ -56,7 +56,7 @@ class LoginController extends BaseController
      * @Template()
      * @Route("/resetPassword/{id}/{data}", name="alita_resetPassword")
      *
-     * @return array|RedirectResponse
+     * @return array<string, mixed>|RedirectResponse
      */
     public function resetPassword(
         int $id,
@@ -114,6 +114,8 @@ class LoginController extends BaseController
     /**
      * @Template()
      * @Route("forgotPassword", name="alita_forgotPassword")
+     *
+     * @return array<string, mixed>
      */
     public function forgotPassword(Request $request, ForgotMailerService $forgotMailerService): array
     {

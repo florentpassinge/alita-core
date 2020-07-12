@@ -45,6 +45,8 @@ class User implements UserInterface
 
     /**
      * @ORM\Column(type="json")
+     *
+     * @var string[]
      */
     private array $roles = [];
 
@@ -148,6 +150,9 @@ class User implements UserInterface
         return $this;
     }
 
+    /**
+     * @return string[]
+     */
     public function getRoles(): array
     {
         $roles = $this->roles;
@@ -157,6 +162,9 @@ class User implements UserInterface
         return array_unique($roles);
     }
 
+    /**
+     * @param string[] $roles
+     */
     public function setRoles(array $roles): self
     {
         $this->roles = $roles;
@@ -305,6 +313,9 @@ class User implements UserInterface
         return $this;
     }
 
+    /**
+     * @param string[] $aPRO_CODE
+     */
     public function hasRule(array $aPRO_CODE): bool
     {
         if ($this->isRoot()) {

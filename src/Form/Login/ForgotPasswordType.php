@@ -26,6 +26,10 @@ class ForgotPasswordType extends AbstractType
         $this->translator = $translator;
     }
 
+    /**
+     * @param FormBuilderInterface<mixed> $builder
+     * @param array<string, mixed>        $options
+     */
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {
         $builder
