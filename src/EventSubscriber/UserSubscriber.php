@@ -2,10 +2,10 @@
 
 declare(strict_types = 1);
 
-namespace App\EventSubscriber;
+namespace Alita\EventSubscriber;
 
-use App\Entity\User;
-use App\Event\UserEvent;
+use Alita\Entity\User;
+use Alita\Event\UserEvent;
 use Carbon\Carbon;
 use Doctrine\ORM\EntityManagerInterface;
 use Doctrine\ORM\NonUniqueResultException;

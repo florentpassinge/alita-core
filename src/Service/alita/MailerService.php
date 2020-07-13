@@ -2,7 +2,7 @@
 
 declare(strict_types = 1);
 
-namespace App\Service\alita;
+namespace Alita\Service\alita;
 
 use Symfony\Component\HttpClient\Exception\InvalidArgumentException;
 use Symfony\WebpackEncoreBundle\Asset\EntrypointLookupInterface;

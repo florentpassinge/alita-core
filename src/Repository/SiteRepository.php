@@ -2,9 +2,9 @@
 
 declare(strict_types = 1);
 
-namespace App\Repository;
+namespace Alita\Repository;
 
-use App\Entity\Site;
+use Alita\Entity\Site;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\Persistence\ManagerRegistry;
 

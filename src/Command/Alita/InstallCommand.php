@@ -2,12 +2,12 @@
 
 declare(strict_types = 1);
 
-namespace App\Command\Alita;
+namespace Alita\Command\Alita;
 
-use App\Command\BaseCommand;
-use App\Entity\Site;
-use App\Entity\User;
-use App\Service\alita\ForgotMailerService;
+use Alita\Command\BaseCommand;
+use Alita\Entity\Site;
+use Alita\Entity\User;
+use Alita\Service\alita\ForgotMailerService;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Console\Application;
 use Symfony\Component\Console\Helper\ProgressBar;

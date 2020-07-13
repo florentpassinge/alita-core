@@ -2,9 +2,9 @@
 
 declare(strict_types = 1);
 
-namespace App\Entity;
+namespace Alita\Entity;
 
-use App\Entity\Traits\TimestampableTrait;
+use Alita\Entity\Traits\TimestampableTrait;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Security\Core\User\UserInterface;
 
@@ -91,7 +91,7 @@ class User implements UserInterface
     private ?\DateTime $renewAt;
 
     /**
-     * @ORM\ManyToOne(targetEntity="App\Entity\Site", inversedBy="users")
+     * @ORM\ManyToOne(targetEntity="Alita\Entity\Site", inversedBy="users")
      */
     private Site $site;
 
