@@ -2,7 +2,7 @@
 
 declare(strict_types = 1);
 
-namespace App\Validator;
+namespace Alita\Validator;
 
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\Validator\Constraint;

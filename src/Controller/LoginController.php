@@ -2,13 +2,13 @@
 
 declare(strict_types = 1);
 
-namespace App\Controller;
+namespace Alita\Controller;
 
-use App\Entity\User;
-use App\Event\UserEvent;
-use App\Form\Login\ForgotPasswordType;
-use App\Form\Login\ResetPasswordType;
-use App\Service\alita\ForgotMailerService;
+use Alita\Entity\User;
+use Alita\Event\UserEvent;
+use Alita\Form\Login\ForgotPasswordType;
+use Alita\Form\Login\ResetPasswordType;
+use Alita\Service\alita\ForgotMailerService;
 use Carbon\Carbon;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
 use Symfony\Component\Form\FormError;
@@ -98,6 +98,8 @@ class LoginController extends BaseController
 
                 $event = new UserEvent($user);
                 $this->dispatcher->dispatch($event, 'user.update');
+
+                $this->session->remove('disabledFormLogin');
 
                 return $this->redirectToRoute('alita_login');
             }

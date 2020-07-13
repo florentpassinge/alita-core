@@ -2,7 +2,7 @@
 
 declare(strict_types = 1);
 
-namespace App\Entity\Traits;
+namespace Alita\Entity\Traits;
 
 use Carbon\Carbon;
 use Doctrine\ORM\Mapping as ORM;

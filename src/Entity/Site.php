@@ -2,9 +2,9 @@
 
 declare(strict_types = 1);
 
-namespace App\Entity;
+namespace Alita\Entity;
 
-use App\Entity\Traits\TimestampableTrait;
+use Alita\Entity\Traits\TimestampableTrait;
 use Doctrine\ORM\Mapping as ORM;
 
 /**

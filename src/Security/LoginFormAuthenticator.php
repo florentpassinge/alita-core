@@ -2,10 +2,10 @@
 
 declare(strict_types = 1);
 
-namespace App\Security;
+namespace Alita\Security;
 
-use App\Entity\User;
-use App\Event\UserEvent;
+use Alita\Entity\User;
+use Alita\Event\UserEvent;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\EventDispatcher\EventDispatcherInterface;
 use Symfony\Component\HttpFoundation\RedirectResponse;

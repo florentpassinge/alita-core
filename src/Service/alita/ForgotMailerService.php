@@ -2,10 +2,10 @@
 
 declare(strict_types = 1);
 
-namespace App\Service\alita;
+namespace Alita\Service\alita;
 
-use App\Entity\Site;
-use App\Entity\User;
+use Alita\Entity\Site;
+use Alita\Entity\User;
 use Carbon\Carbon;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\HttpFoundation\Request;

@@ -2,11 +2,11 @@
 
 declare(strict_types = 1);
 
-namespace App\Controller;
+namespace Alita\Controller;
 
-use App\Entity\User;
-use App\Service\alita\ForgotMailerService;
-use App\Service\alita\MailerService;
+use Alita\Entity\User;
+use Alita\Service\alita\ForgotMailerService;
+use Alita\Service\alita\MailerService;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;

@@ -2,10 +2,10 @@
 
 declare(strict_types = 1);
 
-namespace App\Form\Login;
+namespace Alita\Form\Login;
 
-use App\Entity\User;
-use App\Validator\CheckEntity;
+use Alita\Entity\User;
+use Alita\Validator\CheckEntity;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\EmailType;
 use Symfony\Component\Form\Extension\Core\Type\SubmitType;

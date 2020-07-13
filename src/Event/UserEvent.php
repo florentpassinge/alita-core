@@ -2,9 +2,9 @@
 
 declare(strict_types = 1);
 
-namespace App\Event;
+namespace Alita\Event;
 
-use App\Entity\User;
+use Alita\Entity\User;
 use Symfony\Contracts\EventDispatcher\Event;
 
 class UserEvent extends Event

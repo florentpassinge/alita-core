@@ -2,10 +2,10 @@
 
 declare(strict_types = 1);
 
-namespace App\Twig;
+namespace Alita\Twig;
 
-use App\Entity\Site;
-use App\Repository\SiteRepository;
+use Alita\Entity\Site;
+use Alita\Repository\SiteRepository;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\HttpFoundation\RequestStack;
 use Twig\Extension\AbstractExtension;

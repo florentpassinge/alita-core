@@ -2,9 +2,9 @@
 
 declare(strict_types = 1);
 
-namespace App\Form\Login;
+namespace Alita\Form\Login;
 
-use App\Validator\Password;
+use Alita\Validator\Password;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\PasswordType;
 use Symfony\Component\Form\Extension\Core\Type\RepeatedType;
