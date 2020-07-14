@@ -9,7 +9,7 @@ use Symfony\Component\Routing\Annotation\Route;
 /**
  * Class DefaultController.
  *
- * @Route("/admin")
+ * @Route("/alita")
  */
 class DefaultController extends BaseController
 {
