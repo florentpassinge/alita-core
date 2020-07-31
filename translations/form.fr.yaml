@@ -3,6 +3,15 @@ form:
     login: Se connecter
     send: Envoyer
     updatepassword: Modifier le mot de passe
+  helper:
+    password:
+      digit: Un chiffre
+      length: Entre %min% et %max% caractères
+      lower: Une minuscule
+      space: Aucun espace
+      symbols: "L'un des caracères suivant : ` ~ ! @ # $ % ^ & * ( ) - _ = + [ { } ] \ | ; : ' \" , < . > / ? € £ ¥ ₹"
+      title: 'Votre mot de passe doit contenir :'
+      upper: Une majuscule
   label:
     email: Adresse mail
     password: Mot de passe
