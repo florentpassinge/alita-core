@@ -173,7 +173,7 @@ export class Form
             self.fieldError($currentTarget);
             self.formatPassword.forEach(function(e){
                 if(e === 'min-max'){
-                    if(aError.indexOf('min') || aError.indexOf('max')){
+                    if(aError.indexOf('min') !== -1 || aError.indexOf('max') !== -1){
                         $('.min-max', '.js-password-utils').removeClass(self.elts.textSuccess);
                         $('.min-max', '.js-password-utils').addClass(self.elts.textDanger);
                     }else{
