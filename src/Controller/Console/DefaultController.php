@@ -28,13 +28,15 @@ class DefaultController extends AbstractDashboardController
     public function configureMenuItems(): iterable
     {
         return [
-            MenuItem::linkToDashboard('Dashboard', 'fa fa-home'),
+            MenuItem::subMenu('Blog', 'fa-page')->setSubItems([
+                MenuItem::linkToUrl('Comments', 'fa fa-comment', '#'),
+                MenuItem::linkToUrl('Users', 'fa fa-user', '#'),
+            ]),
 
-            MenuItem::section('Blog'),
-
-            MenuItem::section('Users'),
-            MenuItem::linkToUrl('Comments', 'fa fa-comment', '#'),
-            MenuItem::linkToUrl('Users', 'fa fa-user', '#'),
+            MenuItem::subMenu('Users', 'fa-cogs')->setSubItems([
+                MenuItem::linkToUrl('Comments', 'fa fa-comment', '#'),
+                MenuItem::linkToUrl('Users', 'fa fa-user', '#'),
+            ]),
         ];
     }
 }

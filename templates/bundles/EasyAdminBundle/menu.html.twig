@@ -1,2 +1,54 @@
 {# @var ea \EasyCorp\Bundle\EasyAdminBundle\Context\AdminContext #}
-{{ dump(ea) }}
+{% macro render_menu_item(item) %}
+    {% if item.hasSubItems %}
+        <a href="#" class="nav-link collasped" data-toggle="collapse" data-target="#collapse{{ item.label }}"
+           aria-expanded="true" aria-controls="collapse{{ item.label }}">
+            <i class="fa {{ item.icon }}"></i>
+            <span>{{ item.label }}</span>
+        </a>
+    {% else %}
+        <a href="{{ item.linkUrl }}" class="{{ item.cssClass }} collapse-item {{ ea.mainMenu.isSelected(item) ? 'active' }}" target="{{ item.linkTarget }}" rel="{{ item.linkRel }}" referrerpolicy="origin-when-cross-origin">
+            {% if item.icon is not empty %}<i class="menu-icon fa-fw {{ item.icon }}"></i>{% endif %}
+            <span>{{ item.label }}</span>
+            {% if item.hasSubItems %}<i class="fa fa-fw fa-angle-right treeview-icon"></i>{% endif %}
+        </a>
+    {% endif %}
+{% endmacro %}
+
+<ul class="navbar-nav bg-gradient-gray sidebar accordion" id="accordionSidebar">
+    <a class="sidebar-brand d-flex align-items-center justify-content-center" href="{{ path('alita_dashboard') }}">
+        <div class="sidebar-brand-icon">
+            <i class="fa fa-robot"></i>
+        </div>
+        <div class="sidebar-brand-text mx-3">Alita</div>
+    </a>
+    <hr class="sidebar-divider my-0">
+
+    {% block main_menu %}
+        {% for menuItem in ea.mainMenu.items %}
+            {% block menu_item %}
+                <li class="nav-item {{ menuItem.isMenuSection ? 'header' }} {{ ea.mainMenu.isSelected(menuItem) ? 'active' }} {{ ea.mainMenu.isExpanded(menuItem) ? 'active submenu-active' }}">
+                    {{ _self.render_menu_item(menuItem) }}
+
+                    {% if menuItem.hasSubItems %}
+                        <div id="collapse{{ menuItem.label }}" class="collapse">
+                            <div class="bg-white py-2 collapse-inner rounded">
+                                {% for menuSubItem in menuItem.subItems %}
+                                    {% block menu_subitem %}
+                                        {{ _self.render_menu_item(menuSubItem) }}
+                                    {% endblock menu_subitem %}
+                                {% endfor %}
+                            </div>
+                        </div>
+                    {% endif %}
+                </li>
+            {% endblock menu_item %}
+        {% endfor %}
+    {% endblock main_menu %}
+
+    <hr class="sidebar-divider d-none d-md-block">
+
+    <div class="text-center d-none d-md-inline">
+        <button class="rounded-circle border-0" id="sidebarToggle"></button>
+    </div>
+</ul>
