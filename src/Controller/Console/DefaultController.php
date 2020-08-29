@@ -22,6 +22,8 @@ class DefaultController extends AbstractDashboardController
      */
     public function index(): Response
     {
+        $this->addFlash('success', 'Prout');
+
         return parent::index();
     }
 

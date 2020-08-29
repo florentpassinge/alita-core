@@ -54,10 +54,10 @@
         <div id="wrapper">
             {{ include(ea.templatePath('main_menu')) }}
 
-
-
             <div id="content-wrapper" class="d-flex flex-columns">
                 <div class="container-fluid">
+
+
                     <div class="d-sm-flex align-items-center justify-content-between mb-4">
                         <h1 class="h3 mb-0 text-gray-800">
                             {% block title %}{% endblock %}
@@ -68,6 +68,8 @@
 
                     {% block content %}
                     {% endblock %}
+
+
                 </div>
             </div>
         </div>
@@ -106,9 +108,7 @@
 
 
 
-        {#{% block flash_messages %}
-            {{ include(ea.templatePath('flash_messages')) }}
-        {% endblock flash_messages %}
+        {#
 
         <div class="wrapper">
             {% block wrapper %}
@@ -228,6 +228,10 @@
                 </div>
             {% endblock wrapper %}
         </div>#}
+
+        {% block flash_messages %}
+            {{ include(ea.templatePath('flash_messages')) }}
+        {% endblock flash_messages %}
     {% endblock wrapper_wrapper %}
 
 
