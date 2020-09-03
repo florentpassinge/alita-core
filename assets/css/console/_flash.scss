@@ -30,6 +30,9 @@
       .bg-success{
         background-color: #0f6848 !important;
       }
+      &-bar{
+        transition: 5s linear;
+      }
     }
   }
 }
