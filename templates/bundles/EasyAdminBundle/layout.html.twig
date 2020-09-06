@@ -53,8 +53,8 @@
     {% block wrapper_wrapper %}
         <div id="wrapper">
             {{ include(ea.templatePath('main_menu')) }}
-
-            <div id="content-wrapper" class="d-flex flex-columns">
+            <div id="content-wrapper">
+                {{ include('bundles/EasyAdminBundle/header.html.twig') }}
                 <div class="container-fluid">
 
 
