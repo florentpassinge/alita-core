@@ -64,49 +64,9 @@
                         {% endblock %}
                     </div>
                     {% block content %}
-                    {% endblock %}
-                </div>
-            </div>
-        </div>
-
-
-        {#
-
-        <div class="wrapper">
-            {% block wrapper %}
-
-                <div class="content-wrapper">
-
-
-                    {% block content %}
                         <div class="content">
-                            {% block content_header_wrapper %}
-                                {% set has_help_message = (ea.crud.helpMessage ?? '') is not empty %}
-                                <section class="content-header">
-                                    {% block content_header %}
-                                        <div class="d-flex flex-row justify-content-between align-content-center w-100">
-                                            <div class="content-header-title">
-                                                <h1 class="title">
-                                                    {% block content_title %}{% endblock %}
-
-                                                    {% block content_help %}
-                                                        {% if has_help_message %}
-                                                            <span class="content-header-help">
-                                                                <i class="far fa-question-circle" data-toggle="tooltip" title="{{ ea.crud.helpMessage|e('html_attr') }}"></i>
-                                                            </span>
-                                                        {% endif %}
-                                                    {% endblock %}
-                                                </h1>
-                                            </div>
-
-                                            {% block page_actions_wrapper %}
-                                                <div class="page-actions">{% block page_actions %}{% endblock %}</div>
-                                            {% endblock %}
-                                        </div>
-                                    {% endblock content_header %}
-                                </section>
-                            {% endblock content_header_wrapper %}
-
+                            {{ include('bundles/EasyAdminBundle/content_header.html.twig') }}
+                            
                             <section id="main" class="content-body">
                                 {% block main %}{% endblock %}
                             </section>
@@ -119,13 +79,16 @@
                                     </section>
                                 {% endif %}
                             {% endblock %}
-                        </div>
-                    {% endblock content %}
 
-                    <div id="content-resizer-handler" class="resizer-handler resizer-handler-right"></div>
+                            <div id="content-resizer-handler" class="resizer-handler resizer-handler-right"></div>
+                        </div>
+                    {% endblock %}
                 </div>
-            {% endblock wrapper %}
-        </div>#}
+            </div>
+            <a class="scroll-to-top rounded" href="#page-top">
+                <i class="fas fa-angle-up"></i>
+            </a>
+        </div>
 
         {% block flash_messages %}
             {{ include(ea.templatePath('flash_messages')) }}
