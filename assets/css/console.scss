@@ -11,14 +11,15 @@
 @import "console/_global.scss";
 @import "console/_utilities.scss";
 
-@import "console/dropdowns.scss";
-@import "console/navs.scss";
-@import "console/buttons.scss";
-@import "console/cards.scss";
-@import "console/charts.scss";
+@import "console/_dropdowns.scss";
+@import "console/_navs.scss";
+@import "console/_buttons.scss";
+@import "console/_cards.scss";
+@import "console/_charts.scss";
 @import "console/_login.scss";
 @import "console/_footer.scss";
 
 @import "animated.scss";
 
 @import "console/_modal.scss";
+@import "console/_flash.scss";

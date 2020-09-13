@@ -1,0 +1,38 @@
+.alert {
+  &-container {
+    height: auto !important;
+    width: 600px !important;
+    padding: 0;
+
+    .container{
+      display: table-cell;
+      vertical-align: middle;
+      padding: 10px 20px;
+      &-left{
+        text-align: center;
+        width: 10%;
+        font-size: 22px;
+        height: 5%;
+      }
+      &-right{
+        width: 95%;
+      }
+    }
+
+    .progress {
+      margin-bottom: 0 !important;
+      bottom: 0px !important;
+      left: 0px !important;
+      width: 100% !important;
+      height: 3px !important;
+      position: absolute;
+      border-radius: 0;
+      .bg-success{
+        background-color: #0f6848 !important;
+      }
+      &-bar{
+        transition: 5s linear;
+      }
+    }
+  }
+}

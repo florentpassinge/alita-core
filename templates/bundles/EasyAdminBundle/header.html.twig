@@ -1,0 +1,39 @@
+{% trans_default_domain 'alita' %}
+<nav class="navbar navbar-expand navbar-light bg-white topbar mb-4 static-top shadow">
+    <button id="sidebarToggleTop" class="btn btn-link d-md-none rounded-circle mr-3">
+        <i class="fa fa-bars"></i>
+    </button>
+
+    <ul class="navbar-nav ml-auto">
+        {% block header %}
+            <li class="nav-item dropdown no-arrow">
+                <a class="nav-link dropdown-toggle" href="#" id="userDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                    {% if ea.userMenu.isNameDisplayed %}
+                        <span class="mr-2 d-none d-lg-inline text-gray-600 small">{{ ea.userMenu.name }}</span>
+                    {% endif %}
+                    {% if ea.userMenu.isAvatarDisplayed %}
+                        {% if null == ea.userMenu.avatarUrl %}
+                            <i class="fa fa-fw {{ ea.user is not null ? 'fa-user-circle' : 'fa-user-times' }}"></i>
+                        {% else %}
+                            <img src="{{ ea.userMenu.avatarUrl }}" />
+                        {% endif %}
+                    {% endif %}
+                </a>
+
+                {% block user_menu %}
+                    {% if ea.userMenu.items|length > 0 %}
+                        <div class="dropdown-menu dropdown-menu-right shadow animated--grow-in" aria-labelledby="userDropdown">
+                            {% for item in ea.userMenu.items %}
+                                <a href="{{ item.linkUrl }}" class="dropdown-item user-action {{ item.cssClass }}" target="{{ item.linkTarget }}" rel="{{ item.linkRel }}" referrerpolicy="origin-when-cross-origin">
+                                    {% if item.icon is not empty %}<i class="fa fa-fw {{ item.icon }}"></i>{% endif %}
+                                    <span class="ml-2">{{ item.label|trans() }}</span>
+                                </a>
+                            {% endfor %}
+                        </div>
+                    {% endif %}
+                {% endblock %}
+            </li>
+        {% endblock %}
+    </ul>
+</nav>
+<div id="sidebar-resizer-handler" class="resizer-handler resizer-handler-left"></div>
