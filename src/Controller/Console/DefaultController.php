@@ -30,17 +30,7 @@ class DefaultController extends AbstractDashboardController
 
     public function configureMenuItems(): iterable
     {
-        return [
-            MenuItem::subMenu('Blog', 'fa-page')->setSubItems([
-                MenuItem::linkToUrl('Comments', 'fa fa-comment', '#'),
-                MenuItem::linkToUrl('Users', 'fa fa-user', '#'),
-            ]),
-
-            MenuItem::subMenu('Users', 'fa-cogs')->setSubItems([
-                MenuItem::linkToUrl('Comments', 'fa fa-comment', '#'),
-                MenuItem::linkToUrl('Users', 'fa fa-user', '#'),
-            ]),
-        ];
+        return [];
     }
 
     public function configureUserMenu(UserInterface $user): UserMenu
@@ -53,7 +43,6 @@ class DefaultController extends AbstractDashboardController
             ->displayUserName(true)
             ->setAvatarUrl('https://gravatar.com/avatar/59fc9007ea9812447d85cf49909a0ba2?s=32&d=robohash&r=x')
             ->addMenuItems([
-                MenuItem::linkToRoute('alita.console.profile', 'fa fa-id-card', 'alita_dashboard'),
                 MenuItem::linkToLogout('alita.console.logout', 'fas fa-sign-out-alt'),
             ]);
     }
