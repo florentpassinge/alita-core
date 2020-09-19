@@ -5,6 +5,7 @@ declare(strict_types = 1);
 namespace Alita\Entity;
 
 use Alita\Entity\Traits\TimestampableTrait;
+use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
@@ -76,6 +77,11 @@ class Site
      * @ORM\Column(type="string", nullable=true)
      */
     private ?string $phone;
+
+    /**
+     * @ORM\OneToMany(targetEntity="Alita\Entity\User", mappedBy="site")
+     */
+    private Collection $users;
 
     use TimestampableTrait;
 
@@ -233,5 +239,15 @@ class Site
         $this->phone = $phone;
 
         return $this;
+    }
+
+    public function getUsers(): Collection
+    {
+        return $this->users;
+    }
+
+    public function setUsers(Collection $users): void
+    {
+        $this->users = $users;
     }
 }
