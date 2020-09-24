@@ -1,4 +1,3 @@
-const $ = require('jquery');
 export class Animated {
     constructor () {
         this.initElements();

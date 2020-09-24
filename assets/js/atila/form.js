@@ -1,6 +1,4 @@
-import $ from 'jquery';
-
-import {Modal}              from './modal.js';
+import {Modal}              from './utils/modal.js';
 import passwordValidator    from 'password-validator';
 import validator            from 'validator';
 
