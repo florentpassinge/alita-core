@@ -1,5 +1,6 @@
 {# @var ea \EasyCorp\Bundle\EasyAdminBundle\Context\AdminContext #}
 {% trans_default_domain ea.i18n.translationDomain %}
+{% set actionName = ea.crud.currentAction ?? null %}
 
 <!DOCTYPE html>
 <html lang="{{ ea.i18n.htmlLocale }}">
@@ -28,6 +29,7 @@
     {% endblock %}
 
     {% block head_javascript %}
+        <!--script src="{{ asset('bundles/easyadmin/app.js') }}"></script> -->
     {% endblock head_javascript %}
 
     {% if 'rtl' == ea.i18n.textDirection %}
@@ -43,30 +45,56 @@
 
 {% block body %}
     <body id="page-top" class="ea {% block body_class %}{% endblock %}">
-    <script>
-        document.body.classList.add(
-            'ea-content-width-' + (localStorage.getItem('ea/content/width') || 'normal'),
-            'ea-sidebar-width-' + (localStorage.getItem('ea/sidebar/width') || 'normal')
-        );
-    </script>
-
     {% block wrapper_wrapper %}
         <div id="wrapper">
             {{ include(ea.templatePath('main_menu')) }}
             <div id="content-wrapper">
                 {{ include('bundles/EasyAdminBundle/header.html.twig') }}
                 <div class="container-fluid">
-                    <div class="d-sm-flex align-items-center justify-content-between mb-4">
+                    <div class="d-sm-flex align-items-center justify-content-between content-header">
                         <h1 class="h3 mb-0 text-gray-800">
-                            {% block title %}{% endblock %}
+                            {% if block('title') is defined %}
+                                {{ block('title') }}
+                            {% endif %}
+                            {% if block('content_title') is defined %}
+                                {{ block('content_title') }}
+                            {% endif %}
+
+                            {% block content_help %}
+                                {% set has_help_message = (ea.crud.helpMessage ?? '') is not empty %}
+                                {% if has_help_message %}
+                                    <span class="content-header-help">
+                                        <i class="far fa-question-circle"
+                                           data-toggle="tooltip"
+                                           title="{{ ea.crud.helpMessage|e('html_attr') }}"
+                                        ></i>
+                                    </span>
+                                {% endif %}
+                            {% endblock %}
                         </h1>
-                        {% block action %}
-                        {% endblock %}
+                        <div class="page-actions">
+                            {{ block('page_actions') }}
+                        </div>
                     </div>
                     {% block content %}
                         <div class="content">
-                            {{ include('bundles/EasyAdminBundle/content_header.html.twig') }}
-                            
+                            {% block content_header_wrapper %}
+                                <section class="content-header">
+                                    {% block content_header %}
+                                        <div class="w-100">
+                                            {% block page_actions_wrapper %}
+                                                <div class="float-right">
+                                                    {% if 'index' is not same as(actionName) %}
+                                                        {{ block('page_actions') }}
+                                                    {% endif %}
+                                                </div>
+                                            {% endblock %}
+                                        </div>
+                                    {% endblock content_header %}
+                                </section>
+                            {% endblock content_header_wrapper %}
+
+
                             <section id="main" class="content-body">
                                 {% block main %}{% endblock %}
                             </section>
@@ -98,7 +126,7 @@
 
     {{ encore_entry_script_tags('console') }}
 
-    {% block body_javascript %}{% endblock body_javascript %}
+    {% block body_javascripts %}{% endblock body_javascripts %}
 
     {% block configured_javascripts %}
         {% for js_asset in ea.assets.jsFiles ?? [] %}
@@ -111,6 +139,9 @@
             {{ htmlContent|raw }}
         {% endfor %}
     {% endblock %}
+
+    <script>
+    </script>
     </body>
 {% endblock body %}
 </html>

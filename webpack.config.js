@@ -55,6 +55,10 @@ Encore
     // enables Sass/SCSS support
     .enableSassLoader()
 
+    .autoProvideVariables({
+        $: 'jquery',
+        jQuery: 'jquery',
+    })
     // uncomment if you use TypeScript
     //.enableTypeScriptLoader()
 

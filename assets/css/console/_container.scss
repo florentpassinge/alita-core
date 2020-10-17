@@ -1,0 +1,33 @@
+.container,
+.container-fluid {
+  .content {
+    &-header {
+      background: inherit;
+      flex-direction: row;
+      &::before, &::after {
+        background: inherit;
+      }
+
+      .page-actions {
+        a, button {
+          padding: 0 5px;
+          &.action-icon {
+            width: 12px;
+            height: 12px;
+            text-decoration: none;
+          }
+        }
+      }
+    }
+
+    &-body {
+      .actions {
+        .action {
+          &-edit, &-delete {
+            text-decoration: none;
+          }
+        }
+      }
+    }
+  }
+}

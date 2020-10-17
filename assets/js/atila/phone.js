@@ -1,5 +1,4 @@
-import $ from 'jquery';
-var mobile = require('is-mobile');
+const mobile = require('is-mobile');
 
 export class Phone
 {
