@@ -1,8 +1,10 @@
+{% trans_default_domain 'alita' %}
+
 {# @var ea \EasyCorp\Bundle\EasyAdminBundle\Context\AdminContext #}
-{% macro render_menu_item(item) %}
+{% macro render_menu_item(item, index) %}
     {% if item.hasSubItems %}
-        <a href="#" class="nav-link collasped" data-toggle="collapse" data-target="#collapse{{ item.label }}"
-           aria-expanded="true" aria-controls="collapse{{ item.label }}">
+        <a href="#" class="nav-link collasped" data-toggle="collapse" data-target="#collapse{{ index }}"
+           aria-expanded="true" aria-controls="collapse{{ index }}">
             <i class="fa {{ item.icon }}"></i>
             <span>{{ item.label }}</span>
         </a>
@@ -10,7 +12,6 @@
         <a href="{{ item.linkUrl }}" class="{{ item.cssClass }} collapse-item {{ ea.mainMenu.isSelected(item) ? 'active' }}" target="{{ item.linkTarget }}" rel="{{ item.linkRel }}" referrerpolicy="origin-when-cross-origin">
             {% if item.icon is not empty %}<i class="menu-icon fa-fw {{ item.icon }}"></i>{% endif %}
             <span>{{ item.label }}</span>
-            {% if item.hasSubItems %}<i class="fa fa-fw fa-angle-right treeview-icon"></i>{% endif %}
         </a>
     {% endif %}
 {% endmacro %}
@@ -28,10 +29,10 @@
         {% for menuItem in ea.mainMenu.items %}
             {% block menu_item %}
                 <li class="nav-item {{ menuItem.isMenuSection ? 'header' }} {{ ea.mainMenu.isSelected(menuItem) ? 'active' }} {{ ea.mainMenu.isExpanded(menuItem) ? 'active submenu-active' }}">
-                    {{ _self.render_menu_item(menuItem) }}
+                    {{ _self.render_menu_item(menuItem, loop.index) }}
 
                     {% if menuItem.hasSubItems %}
-                        <div id="collapse{{ menuItem.label }}" class="collapse">
+                        <div id="collapse{{ loop.index }}" class="collapse">
                             <div class="bg-white py-2 collapse-inner rounded">
                                 {% for menuSubItem in menuItem.subItems %}
                                     {% block menu_subitem %}
