@@ -23,7 +23,7 @@ services:
       - mailcatcher
     volumes:
       - ${HOME}/.composer:/.composer
-      - /etc/localtime:/etc/localtime:ro
+        #      - /etc/localtime:/etc/localtime:ro
       - ./:/srv/alita:rw,cached
     labels:
       - "traefik.backend=php"
