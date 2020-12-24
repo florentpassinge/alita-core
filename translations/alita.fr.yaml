@@ -20,3 +20,7 @@ alita:
     lastName: Prenom
     roles: Roles
     userBlocked: Compte bloqué
+  rules:
+    role_admin: Administrateur
+    role_user: Utilisateur
+    role_super_admin: Super Administrateur
