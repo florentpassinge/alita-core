@@ -4,4 +4,23 @@ alita:
   action:
     edit: Modifier
   console:
+    logout: Se déconnecter
+    menu:
+      admin: Administration
+      user: Utilisateurs
     profile: Profil
+    title:
+      user: Nouvel Utilisateur
+      users: Liste des Utilisateurs
+  entity:
+    active: Actif
+    email: Adresse mail
+    firstName: Nom
+    id: Identifiant
+    lastName: Prenom
+    roles: Roles
+    userBlocked: Compte bloqué
+  rules:
+    role_admin: Administrateur
+    role_user: Utilisateur
+    role_super_admin: Super Administrateur

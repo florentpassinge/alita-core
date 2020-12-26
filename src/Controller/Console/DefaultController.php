@@ -30,7 +30,11 @@ class DefaultController extends AbstractDashboardController
 
     public function configureMenuItems(): iterable
     {
-        return [];
+        return [
+            MenuItem::subMenu('alita.console.menu.admin', 'fa fa-cogs')->setSubItems([
+                MenuItem::linkToCrud('alita.console.menu.user', 'fa fa-users', User::class),
+            ]),
+        ];
     }
 
     public function configureUserMenu(UserInterface $user): UserMenu
@@ -45,5 +49,11 @@ class DefaultController extends AbstractDashboardController
             ->addMenuItems([
                 MenuItem::linkToLogout('alita.console.logout', 'fas fa-sign-out-alt'),
             ]);
+    }
+
+    public function configureDashboard(): Dashboard
+    {
+        return Dashboard::new()
+            ->setTranslationDomain('alita');
     }
 }

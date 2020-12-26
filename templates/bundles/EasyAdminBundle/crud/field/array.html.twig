@@ -1,0 +1,18 @@
+{# @var ea \EasyCorp\Bundle\EasyAdminBundle\Context\AdminContext #}
+{# @var field \EasyCorp\Bundle\EasyAdminBundle\Dto\FieldDto #}
+{# @var entity \EasyCorp\Bundle\EasyAdminBundle\Dto\EntityDto #}
+{% trans_default_domain ea.i18n.translationDomain %}
+{% if ea.crud.currentAction == 'detail' %}
+    <ul>
+        {% for item in field.value %}
+            <li>{{ item }}</li>
+        {% endfor %}
+    </ul>
+{% else %}
+    {% for item in field.value %}
+        {{ ('alita.rules.'~item|lower)|trans }}
+        {% if not loop.last %}
+            ,
+        {% endif %}
+    {% endfor %}
+{% endif %}

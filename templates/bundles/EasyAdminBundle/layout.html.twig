@@ -82,13 +82,6 @@
                                 <section class="content-header">
                                     {% block content_header %}
                                         <div class="w-100">
-                                            {% block page_actions_wrapper %}
-                                                <div class="float-right">
-                                                    {% if 'index' is not same as(actionName) %}
-                                                        {{ block('page_actions') }}
-                                                    {% endif %}
-                                                </div>
-                                            {% endblock %}
                                         </div>
                                     {% endblock content_header %}
                                 </section>
