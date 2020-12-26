@@ -1,11 +1,11 @@
 {
     "devDependencies": {
-        "@symfony/webpack-encore": "^0.31.0",
-        "core-js": "^3.0.0",
-        "node-sass": "^4.14.1",
-        "regenerator-runtime": "^0.13.2",
-        "sass-loader": "^8.0.0",
-        "webpack-notifier": "^1.6.0"
+        "@symfony/webpack-encore": "^0.33.0",
+        "core-js": "^3.8.1",
+        "node-sass": "^5.0.0",
+        "regenerator-runtime": "^0.13.7",
+        "sass-loader": "^10.1.0",
+        "webpack-notifier": "^1.12.0"
     },
     "license": "UNLICENSED",
     "private": true,
@@ -16,19 +16,22 @@
         "build": "encore production --progress"
     },
     "dependencies": {
-        "@fortawesome/fontawesome-free": "^5.13.0",
-        "bootstrap": "^4.5.0",
+        "@fortawesome/fontawesome-free": "^5.15.1",
+        "@popperjs/core": "^2.6.0",
+        "bootstrap": "^4.5.3",
         "font-awesome": "^4.7.0",
         "fontawesome": "^5.6.3",
-        "is-mobile": "^2.2.1",
+        "is-mobile": "^2.2.2",
         "jquery": "^3.5.1",
         "lodash": "^4.17.20",
         "node-forge": "^0.10.0",
-        "password-validator": "^5.0.3",
+        "node-notifier": "^9.0.0",
+        "object-path": "^0.11.5",
+        "password-validator": "^5.1.1",
         "popper": "^1.0.1",
         "popper.js": "^1.16.1",
-        "serialize-javascript": "^4.0.0",
-        "validator": "^13.0.0",
+        "serialize-javascript": "^5.0.1",
+        "validator": "^13.5.2",
         "websocket-extensions": "^0.1.4"
     },
     "name": "alita",
