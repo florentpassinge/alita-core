@@ -1,6 +1,11 @@
 alita:
   _flash:
+    error: Erreur
     forgotpassword: Un mail vous permettant de regénérer votre mot de passe vient de vous être envoyé.
+    info: Information
+    question: Question
+    success: Succès
+    warning: Attention
   action:
     edit: Modifier
   console:
