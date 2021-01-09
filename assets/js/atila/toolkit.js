@@ -17,7 +17,6 @@ export class Toolkit
 
         this.$elts = {
             $body: $('body'),
-            $progressBarAlert: $('.progress-bar-alert'),
         }
     }
 
@@ -51,14 +50,6 @@ export class Toolkit
                     self.sideBarToggle()
                 }
             );
-
-        $(document).ready(function() {
-            if (self.$elts.$progressBarAlert.length > 0) {
-                self.$elts.$progressBarAlert.each(function () {
-                    self.progressBar($(this));
-                });
-            }
-        });
 
         $(document).on('scroll', function() {
             const scrollDistance = $(this).scrollTop();
@@ -97,17 +88,6 @@ export class Toolkit
         evt.stopPropagation();
 
         window.open($currentTarget.attr('href'),'_blank');
-    }
-
-    progressBar(item)
-    {
-        let $item = $(item);
-        setTimeout((e) => {
-            $item.css('width', 0 + '%');
-            setTimeout((e) =>{
-                $item.closest('.alert-container').remove();
-            },5100);
-        }, 2000);
     }
 
     sideBarToggle()

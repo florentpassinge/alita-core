@@ -1,10 +1,7 @@
+{% trans_default_domain 'alita' %}
 {% for label,messages in app.flashes() %}
     {% for message in messages %}
-        <div class="alert alert-dismissible fade show alert-{{label}} fixed-top m-5 w-50 mr-auto ml-auto" role="alert">
-            {{ message }}
-            <button type="button" class="close" data-dismiss="alert" aria-label="Close">
-                <span aria-hidden="true">&times;</span>
-            </button>
-        </div>
+        <span class="invisible js-alert" data-type="{{ label }}" data-message="{{ message }}"
+              data-title="{{ ('alita._flash.'~label)|trans }}"></span>
     {% endfor %}
 {% endfor %}
