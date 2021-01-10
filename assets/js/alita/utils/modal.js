@@ -55,7 +55,7 @@ export class Modal
             );
     }
 
-    showModal(title, content, hasButtonCLose, hasButtonValid, hasButtonCancel)
+    showModal (title, content, hasButtonCLose, hasButtonValid, hasButtonCancel)
     {
         this.$elts.$modal_title.html(title);
         this.$elts.$modal_content.html(content);
@@ -64,7 +64,7 @@ export class Modal
         this.$elts.$modal.removeClass('invisible');
     }
 
-    removeModal()
+    removeModal ()
     {
         this.$elts.$modal_title.html('');
         this.$elts.$modal_content.html('');
@@ -72,14 +72,14 @@ export class Modal
         this.$elts.$modal.addClass('invisible');
     }
 
-    checkRemoveClose(e)
+    checkRemoveClose (e)
     {
         if(this.$elts.$modal.hasClass('active') && 27 === e.keyCode){
             this.removeModal();
         }
     }
 
-    confirmModal(e)
+    confirmModal (e)
     {
         $(this.elts.modal).find('.btn-ok').attr('href', $(e.currentTarget).data('href'));
     }

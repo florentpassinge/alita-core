@@ -22,11 +22,11 @@ export class Alert
 
         this.elts = {
             icons: {
-                error: 'far fa-times-cicle',
-                info: 'fas fa-exclamation-circle',
-                question: 'far fa-question-circle',
-                success: 'far fa-check-circle',
-                warning: 'fas fa-exclamation-triangle',
+                error:      'far fa-times-cicle',
+                info:       'fas fa-exclamation-circle',
+                question:   'far fa-question-circle',
+                success:    'far fa-check-circle',
+                warning:    'fas fa-exclamation-triangle',
             }
         }
 
@@ -55,3 +55,4 @@ export class Alert
         }
     }
 }
+new Alert();

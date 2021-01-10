@@ -47,3 +47,4 @@ export class Phone
         }
     }
 }
+new Phone();

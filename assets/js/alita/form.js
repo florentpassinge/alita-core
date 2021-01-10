@@ -1,5 +1,5 @@
 import {Modal}              from './utils/modal.js';
-import passwordValidator    from 'password-validator';
+import PasswordValidator    from 'password-validator';
 import validator            from 'validator';
 
 export class Form
@@ -29,7 +29,7 @@ export class Form
             $passwordUtils: $('.js-password-utils'),
         };
 
-        this.passwordFormat = new passwordValidator();
+        this.passwordFormat = new PasswordValidator();
         this.passwordFormat.is().min(form_password_min_char)
             .is().max(form_password_max_char)
             .has().uppercase()
@@ -112,7 +112,7 @@ export class Form
 
     }
 
-    checkValidityEmail(e)
+    checkValidityEmail (e)
     {
         let $currentTarget  = $(e.currentTarget);
         let value           = $currentTarget.val();
@@ -129,13 +129,13 @@ export class Form
 
     }
 
-    checkConfirm(e){
+    checkConfirm (e){
         let $currentTarget  = $(e.currentTarget);
         let target          = $currentTarget.data('confirm');
 
         if(!validator.isEmpty($currentTarget.val())){
             let $target = $('#' + target);
-            if(validator.isEmpty($currentTarget.val()) || !validator.equals($currentTarget.val(), $target.val())){
+            if(validator.isEmpty($currentTarget.val()) || !validator.equals($currentTarget.val(), $target.val())){
                 this.fieldError($currentTarget);
             } else{
                 this.fieldSuccess($currentTarget);
@@ -143,7 +143,7 @@ export class Form
         }
     }
 
-    checkInput(e)
+    checkInput (e)
     {
         let $currentTarget  = $(e.currentTarget);
         let action          = $currentTarget.data('action');
@@ -160,7 +160,7 @@ export class Form
         }
     }
 
-    checkPassword(e)
+    checkPassword (e)
     {
         let self            = this;
         let $currentTarget  = $(e.currentTarget);
@@ -194,7 +194,7 @@ export class Form
         }
     }
 
-    formatEmail(e)
+    formatEmail (e)
     {
         let $currentTarget  = $(e.currentTarget);
         let value           = $currentTarget.val();
@@ -206,14 +206,14 @@ export class Form
         }
     }
 
-    formatUpperCase(e){
+    formatUpperCase (e){
         let $currentTarget  = $(e.currentTarget);
         let value           = $currentTarget.val();
 
         $currentTarget.val(value.toUpperCase());
     }
 
-    requiredInput(e)
+    requiredInput (e)
     {
         let $currentTarget  = $(e.currentTarget);
         let value           = $currentTarget.val();
@@ -221,7 +221,7 @@ export class Form
         (0 === value.length ? this.fieldError($currentTarget): this.fieldSuccess($currentTarget));
     }
 
-    submit(e)
+    submit (e)
     {
         let $currentTarget  = $(e.currentTarget);
         let $fieldError     = $currentTarget.find('.is-invalid');
@@ -243,7 +243,7 @@ export class Form
         }
     }
 
-    fieldError(target)
+    fieldError (target)
     {
         if(!target.hasClass('is-invalid')){
             target.removeClass('is-valid');
@@ -251,7 +251,7 @@ export class Form
         }
     }
 
-    fieldSuccess(target)
+    fieldSuccess (target)
     {
         if(!target.hasClass('is-valid')){
             target.removeClass('is-invalid');
@@ -259,3 +259,4 @@ export class Form
         }
     }
 }
+new Form();

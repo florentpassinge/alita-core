@@ -1,11 +1,3 @@
-import {Ajaxify}        from './atila/ajaxify';
-import {Alert}          from './atila/alert';
-import {Animated}       from './atila/animated';
-import {FiltersModal}   from './atila/filtersModal';
-import {Form}           from './atila/form';
-import {Phone}          from './atila/phone';
-import {Toolkit}        from './atila/toolkit';
-
 export class Alita {
     constructor () {
         this.initElements();
@@ -26,30 +18,37 @@ export class Alita {
 
     launchEvents ()
     {
-        new Toolkit();
+        import(/* webpackMode: "eager" *//* webpackChunkName: "toolkit" */ './alita/toolkit')
+          .catch(error => 'An error occurred while loading the component Toolkit');
 
         if (this.$elts.$ajaxify.length > 0) {
-            new Ajaxify();
+            import(/* webpackMode: "lazy" *//* webpackChunkName: "ajaxify" */ './alita/ajaxify')
+              .catch(error => 'An error occurred while loading the component Ajaxify');
         }
 
         if (this.$elts.$alert.length > 0) {
-            new Alert();
+            import(/* webpackMode: "lazy" *//* webpackChunkName: "alert" */ './alita/alert')
+              .catch(error => 'An error occurred while loading the component Alert');
         }
 
         if (this.$elts.$animated.length > 0) {
-            new Animated();
+            import(/* webpackMode: "lazy" *//* webpackChunkName: "animated" */ './alita/animated')
+              .catch(error => 'An error occurred while loading the component Animated');
         }
 
         if (this.$elts.$filters.length > 0) {
-            new FiltersModal();
+            import(/* webpackMode: "lazy" *//* webpackChunkName: "filtersModal" */ './alita/filtersModal')
+              .catch(error => 'An error occurred while loading the component FiltersModal');
         }
 
         if (this.$elts.$form.length > 0) {
-            new Form();
+            import(/* webpackMode: "lazy" *//* webpackChunkName: "form" */ './alita/form')
+              .catch(error => 'An error occurred while loading the component Form');
         }
 
         if (this.$elts.$phone.length > 0) {
-            new Phone();
+            import(/* webpackMode: "lazy" *//* webpackChunkName: "phone" */ './alita/phone')
+              .catch(error => 'An error occurred while loading the component Phone');
         }
     }
 }

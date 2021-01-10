@@ -79,3 +79,4 @@ export class Ajaxify
         self.ajaxManager.addRequest(request);
     }
 }
+new Ajaxify();
