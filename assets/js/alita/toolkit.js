@@ -12,7 +12,6 @@ export class Toolkit
             external: 'a.external',
             sidebarToggle: '#sidebarToggle',
             sidebarToggleTop: '#sidebarToggleTop'
-
         };
 
         this.$elts = {
@@ -81,7 +80,7 @@ export class Toolkit
         self.$elts.$body.addClass('ea-sidebar-width-' + (localStorage.getItem('ea/sidebar/width') || 'normal'));
     }
 
-    externalLink(evt)
+    externalLink (evt)
     {
         let $currentTarget = $(evt.currentTarget);
         evt.preventDefault();
@@ -90,12 +89,14 @@ export class Toolkit
         window.open($currentTarget.attr('href'),'_blank');
     }
 
-    sideBarToggle()
+    sideBarToggle ()
     {
-        $("body").toggleClass("sidebar-toggled");
-        $(".sidebar").toggleClass("toggled");
-        if ($(".sidebar").hasClass("toggled")) {
+        let $sidebar = $('.sidebar');
+        $('body').toggleClass('sidebar-toggled');
+        $sidebar.toggleClass('toggled');
+        if ($sidebar.hasClass('toggled')) {
             $('.sidebar .collapse').collapse('hide');
-        };
+        }
     }
 }
+new Toolkit();

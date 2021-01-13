@@ -7,8 +7,8 @@ export class Animated {
     initElements ()
     {
         this.$elts = {
-            $animated: $('.js-animated') || null,
-            $body: $('body')
+            $animated:  $('.js-animated') || null,
+            $body:      $('body')
         }
     }
 
@@ -36,7 +36,7 @@ export class Animated {
         }
     }
 
-    sendForm($element)
+    sendForm ($element)
     {
         $element.submit(() => {
             let item = $element.data('item');
@@ -54,3 +54,4 @@ export class Animated {
         }
     }
 }
+new Animated();

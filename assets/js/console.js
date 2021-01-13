@@ -4,6 +4,6 @@ import '../css/console.scss';
 require('bootstrap');
 require('@fortawesome/fontawesome-free/js/all.js');
 
-// Import atila
+// Import alita
 import {Alita} from './alita.js';
 new Alita();

@@ -9,15 +9,15 @@ export class FiltersModal
     initEls ()
     {
         this.elts = {
-            btnApply: '#modal-apply-button',
-            btnClear: '#modal-clear-button',
-            fields: '.filter-field'
+            btnApply:   '#modal-apply-button',
+            btnClear:   '#modal-clear-button',
+            fields:     '.filter-field'
         };
 
         this.$elts = {
-            $body: $('body'),
-            $form: $('#filters'),
-            $modalFilter: $('#modal-filters'),
+            $body:          $('body'),
+            $form:          $('#filters'),
+            $modalFilter:   $('#modal-filters'),
         }
     }
 
@@ -40,7 +40,7 @@ export class FiltersModal
                 });
     }
 
-    applyModal(evt)
+    applyModal (evt)
     {
         let self = this;
         
@@ -56,7 +56,7 @@ export class FiltersModal
         $('#filters').submit();
     }
 
-    closeModal()
+    closeModal ()
     {
         let self = this;
 
@@ -68,7 +68,7 @@ export class FiltersModal
         $('#filters').submit();
     }
 
-    removeFilter($filter)
+    removeFilter ($filter)
     {
         let self = this;
 
@@ -81,3 +81,4 @@ export class FiltersModal
         $filter.remove();
     }
 }
+new FiltersModal();
