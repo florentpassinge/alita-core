@@ -1,0 +1,32 @@
+sonata_admin:
+    title: 'Alita'
+    options:
+        html5_validate: true
+        # Auto order groups and admins by label or id
+        sort_admins: false
+        confirm_exit: true
+        js_debug: false
+        skin: 'skin-black'
+        use_select2: true
+        use_icheck: true
+        use_bootlint: false
+        use_stickyforms: true
+        pager_links: 25
+        form_type: standard
+        default_group: default
+        default_label_catalogue: SonataAdminBundle
+        default_icon: '<i class="fa fa-folder"></i>'
+        dropdown_number_groups_per_colums: 2
+
+    dashboard:
+        blocks:
+            - { type: sonata.admin.block.admin_list, position: left }
+
+sonata_block:
+    blocks:
+        sonata.admin.block.admin_list:
+            contexts: [admin]
+
+knp_menu:
+    twig:
+        template: _blocks/console/menu.html.twig

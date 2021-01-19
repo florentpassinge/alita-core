@@ -1,0 +1,69 @@
+{% set currentItem = item %}
+{% if currentItem.hasChildren and options.depth is not same as(0) and currentItem.displayChildren %}
+    {% set listAttributes = currentItem.childrenAttributes %}
+
+    {% for item in currentItem.children %}
+        {{ _self.itemMenu(item, loop.index) }}
+    {% endfor %}
+{% endif %}
+
+{% macro itemMenu(item, index) %}
+    {% if not item.hasChildren() %}
+        {{ _self.itemMenuSimple(item) }}
+    {% else %}
+        {{ _self.itemMenuCollasped(item, index) }}
+    {% endif %}
+{% endmacro %}
+
+{% macro itemMenuSimple(item) %}
+    <li class="nav-item">
+        {{ _self.linkMenu(item) }}
+    </li>
+{% endmacro %}
+
+{% macro itemMenuCollasped(item, index) %}
+    {% set currentItem = item %}
+    <li class="nav-item">
+        {{ _self.linkMenu(currentItem, index) }}
+        <div id="collapse{{ index }}" class="collapse">
+            <div class="bg-white py-2 collapse-inner rounded">
+                {% for item in currentItem.children %}
+                    {{ _self.subItemMenu(item) }}
+                {% endfor %}
+            </div>
+        </div>
+    </li>
+{% endmacro %}
+
+{% macro linkMenu(item, collaspe = false) %}
+    {% set route = item.extras.routes[0] %}
+    <a
+       class="nav-link {% if collaspe %}collasped{% endif %}"
+       {% if collaspe %}
+           href="#"
+           data-toggle="collapse"
+           data-target="#collapse{{ collaspe }}"
+           aria-controls="collapse{{ collaspe }}"
+           aria-expanded="true"
+       {% else %}
+           href="{{ path(route.route, route.parameters) }}"
+       {% endif %}
+    >
+        {% if item.labelAttributes.icon is defined %}
+            <i class="{{ item.labelAttributes.icon }}"></i>
+        {% endif %}
+        <span>{{ item.name }}</span>
+    </a>
+{% endmacro %}
+
+{% macro subItemMenu(item) %}
+    {% set route = item.extras.routes[0] %}
+
+    <a class="collapse-item" href="{{ path(route.route, route.parameters) }}">
+        {% if item.labelAttributes.icon is defined %}
+            <i class="{{ item.labelAttributes.icon }}"></i>
+        {% endif %}
+
+        {{ item.name }}
+    </a>
+{% endmacro %}
