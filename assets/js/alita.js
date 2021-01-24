@@ -10,7 +10,6 @@ export class Alita {
             $ajaxify    : $('.js-ajaxify')  || null,
             $alert      : $('.js-alert') || null,
             $animated   : $('.js-animated') || null,
-            $filters    : $('.js-filters-modal') || null,
             $form       : $('.js-form')     || null,
             $phone      : $('.js-phone')    || null,
         };
@@ -34,11 +33,6 @@ export class Alita {
         if (this.$elts.$animated.length > 0) {
             import(/* webpackMode: "lazy" *//* webpackChunkName: "animated" */ './alita/animated')
               .catch(error => 'An error occurred while loading the component Animated');
-        }
-
-        if (this.$elts.$filters.length > 0) {
-            import(/* webpackMode: "lazy" *//* webpackChunkName: "filtersModal" */ './alita/filtersModal')
-              .catch(error => 'An error occurred while loading the component FiltersModal');
         }
 
         if (this.$elts.$form.length > 0) {
