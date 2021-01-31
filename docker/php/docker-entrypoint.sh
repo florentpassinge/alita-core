@@ -2,7 +2,7 @@
 set -e
 # first arg is `-f` or `--some-option`
 if [ "${1#-}" != "$1" ]; then
-	set -- php-fpm "$@"
+    set -- php-fpm "$@"
 fi
 
 export SYMFONY_ENV=$SYMFONY_ENV
@@ -41,8 +41,11 @@ if [ "$INSTALL" = true ]; then
     echo "*********** WEBPACK ENCORE **********"
     yarn init -y
     yarn install
+    yarn run dev
     echo "*********** ASSET *******************"
     php bin/console assets:install
+    echo "*********** GRUMPHP ***********"
+    php vendor/bin/grumphp git:init
 fi
 
 echo "=================== UID =================="
