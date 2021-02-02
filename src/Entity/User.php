@@ -34,7 +34,7 @@ class User implements UserInterface
     private ?string $firstName = null;
 
     /**
-     * @ORM\Column(type="string", length=180, unique=true)
+     * @ORM\Column(type="string", length=180, unique=true, name="email")
      */
     private ?string $email = null;
 

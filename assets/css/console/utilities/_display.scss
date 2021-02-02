@@ -1,3 +1,8 @@
 .o-hidden {
   overflow: hidden !important;
 }
+.select2 {
+  &-container, &-choice{
+    height: 25px !important;
+  }
+}

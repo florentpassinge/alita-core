@@ -1,10 +1,11 @@
 {% set currentItem = item %}
 {% if currentItem.hasChildren and options.depth is not same as(0) and currentItem.displayChildren %}
     {% set listAttributes = currentItem.childrenAttributes %}
-
-    {% for item in currentItem.children %}
-        {{ _self.itemMenu(item, loop.index) }}
-    {% endfor %}
+    <ul class="sidebar-menu menu accordion" id="accordionSidebar">
+        {% for item in currentItem.children %}
+            {{ _self.itemMenu(item, loop.index) }}
+        {% endfor %}
+    </ul>
 {% endif %}
 
 {% macro itemMenu(item, index) %}
@@ -16,7 +17,7 @@
 {% endmacro %}
 
 {% macro itemMenuSimple(item) %}
-    <li class="nav-item">
+    <li class="sidebar-menu-item {% if isCurrent(item) %}active{% endif %}">
         {{ _self.linkMenu(item) }}
     </li>
 {% endmacro %}
@@ -38,7 +39,7 @@
 {% macro linkMenu(item, collaspe = false) %}
     {% set route = item.extras.routes[0] %}
     <a
-       class="nav-link {% if collaspe %}collasped{% endif %}"
+       class="nav-link {% if collaspe %}collasped{% endif %} {% if isCurrent(item) %}active{% endif %}"
        {% if collaspe %}
            href="#"
            data-toggle="collapse"
@@ -59,7 +60,7 @@
 {% macro subItemMenu(item) %}
     {% set route = item.extras.routes[0] %}
 
-    <a class="collapse-item" href="{{ path(route.route, route.parameters) }}">
+    <a class="collapse-item {% if isCurrent(item) %}active{% endif %}" href="{{ path(route.route, route.parameters) }}">
         {% if item.labelAttributes.icon is defined %}
             <i class="{{ item.labelAttributes.icon }}"></i>
         {% endif %}

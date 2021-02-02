@@ -4,26 +4,11 @@
 @import "console/_functions.scss";
 
 @import "~bootstrap/scss/bootstrap";
-
 @import "~@fortawesome/fontawesome-free/css/all.min.css";
-
 @import '~izitoast/dist/css/iziToast.min.css';
 
 @import "console/_mixins.scss";
-@import "console/_global.scss";
 @import "console/_utilities.scss";
-
-@import "console/_dropdowns.scss";
-@import "console/_navs.scss";
-@import "console/_buttons.scss";
-@import "console/_cards.scss";
-@import "console/_charts.scss";
-@import "console/_login.scss";
-@import "console/_footer.scss";
-@import "console/_datagrid.scss";
+@import "console/_global.scss";
 
 @import "animated.scss";
-
-@import "console/_modal.scss";
-@import "console/_flash.scss";
-@import "console/_container.scss";

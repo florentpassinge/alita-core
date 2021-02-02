@@ -1,0 +1,21 @@
+.content-header {
+  nav {
+    .container-fluid {
+      padding: 0;
+      .navbar-collapse {
+        .nav {
+          a {
+            padding: 2px;
+            margin: 10px;
+            font-size: 12px;
+          }
+          .sonata-actions{
+            .dropdown-toggle::after {
+              content: none;
+            }
+          }
+        }
+      }
+    }
+  }
+}

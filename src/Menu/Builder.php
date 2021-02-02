@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types = 1);
+
 namespace Alita\Menu;
 
 use Knp\Menu\FactoryInterface;
@@ -20,6 +22,13 @@ class Builder
 
         $menu->addChild('Home', [
             'route'           => 'alita_dashboard',
+            'labelAttributes' => [
+                'icon' => 'fas fa-tachometer-alt',
+            ],
+        ]);
+
+        $menu->addChild('User', [
+            'route'           => 'admin_alita_user_list',
             'labelAttributes' => [
                 'icon' => 'fas fa-tachometer-alt',
             ],

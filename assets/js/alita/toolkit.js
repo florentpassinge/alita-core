@@ -76,9 +76,7 @@ export class Toolkit
             e.preventDefault();
         });
 
-        self.$elts.$body.addClass('ea-content-width-' + (localStorage.getItem('ea/content/width') || 'normal'));
-        self.$elts.$body.addClass('ea-sidebar-width-' + (localStorage.getItem('ea/sidebar/width') || 'normal'));
-    }
+        }
 
     externalLink (evt)
     {

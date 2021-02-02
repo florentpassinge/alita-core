@@ -1,0 +1,6 @@
+services:
+    admin.user:
+        class: Alita\Admin\UserAdmin
+        arguments: [ ~, Alita\Entity\User, ~ ]
+        tags:
+            - { name: sonata.admin, manager_type: orm, label: User }

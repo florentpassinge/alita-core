@@ -6,3 +6,10 @@ $theme-colors: map-merge(
     ),
     $theme-colors
 );
+
+@mixin transform($x, $y : 0) {
+    -webkit-transform: translate($x, $y);
+    -ms-transform: translate($x, $y);
+    -o-transform: translate($x, $y);
+    transform: translate($x, $y);
+}

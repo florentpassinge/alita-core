@@ -4,25 +4,15 @@ html {
 }
 
 body {
-  @import '_components/_login';
-
   height: 100%;
   a {
     &.logo {
       i {
         color: $white;
-        &::before{
-          font-size: inherit;
-        }
       }
       &:hover {
         text-decoration: none;
 
-        i {
-          &::before{
-            font-size: 30px;
-          }
-        }
         span {
           @extend .invisible;
         }
@@ -40,30 +30,12 @@ body {
 
   i{
     color: $gray-900;
-    &::before{
-      font-size: 14px;
-    }
   }
 
   &.skin-blue {
-    header {
-      @import '_components/navbar';
-    }
-    @import '_components/sidebar';
-    .content-wrapper {
-      i {
-        font-size: 12px;
-      }
-      @import '_components/content-header';
-      @import '_components/content';
-    }
+
   }
 }
-
-.dropdown-toggle::after {
-  content: none;
-}
-
 //
 //  #wrapper {
 //    display: flex;

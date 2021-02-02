@@ -1,8 +1,12 @@
 admin_area:
     resource: "@SonataAdminBundle/Resources/config/routing/sonata_admin.xml"
-    prefix: /alita/admin
+    prefix: /
+
+sonata_admin_dashboard:
+    path: /alita
+    controller: Alita\Controller\Console\DashboardController::index
 
 _sonata_admin:
     resource: .
     type: sonata_admin
-    prefix: /alita
+

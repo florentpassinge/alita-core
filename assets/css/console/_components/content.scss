@@ -1,0 +1,54 @@
+.sticky{
+  &-wrapper{
+    nav{
+      .container-fluid{
+        .navbar-collapse{
+          .nav{
+            .sonata-actions{
+              a {
+                font-size: 12px;
+                &::after {
+                  content: none;
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+}
+.content {
+  .box {
+    &-footer {
+      .form-inline {
+        label {
+          display: inline-block !important;
+        }
+        .pull-left, .pull-right {
+          width: 50%;
+          font-size: 12px;
+          .select2-choice>span:first-child, .select2-chosen, .select2-container .select2-choices .select2-search-field input {
+            padding: 4px 12px 6px 12px
+          }
+          .select2-container .select2-choice .select2-arrow b, .select2-container .select2-choice div b{
+            background-position: 0 0;
+          }
+        }
+        .pull {
+          &-right {
+            text-align: end;
+            button{
+              font-size: 12px;
+            }
+            .dropdown-toggle{
+              &::after {
+                content: none;
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+}
