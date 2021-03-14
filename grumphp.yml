@@ -44,11 +44,5 @@ parameters:
       project: "7.4"
     jsonlint: ~
     yamllint: ~
-    securitychecker:
-      lockfile: composer.lock
-      format: ~
-      end_point: ~
-      timeout: ~
-      run_always: false
     phplint:
       exclude: ['vendor']
